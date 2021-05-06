@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/.idea.gtata1-starter.iml
+/contentModel.xml
+/modules.xml
+# Datasource local storage ignored files
+/../../../../../../:\Unity\gtata1-starter\.idea\.idea.gtata1-starter\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
