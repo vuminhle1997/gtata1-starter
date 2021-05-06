@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
         if (dirX == 0)
         {
             stateMachine.Trigger(PlayerTransition.IsIdle, null);
-            //Trigger(PlayerTransition.IsIdle, null);
         }
         else
         {
@@ -58,11 +57,13 @@ public class PlayerController : MonoBehaviour
         // transition to falling down state
         if (!isGrounded && stateMachine.GetCurrentState() == PlayerState.Jump)
         {
-            
             stateMachine.Trigger(PlayerTransition.IsFallingDown, null);
         }
     }
     
+    /// <summary>
+    /// performs jump on player
+    /// </summary>
     public void Jump()
     {
         rb.velocity = Vector2.up * jumpForce;

@@ -17,12 +17,6 @@ public class JumpingHandler : StateHandler
         Debug.Log("Enter State: " + $"{PlayerState.Jump}");
     }
 
-    // private void Update()
-    // {
-    //     playerController.isGrounded = Physics2D.OverlapCircle(playerController.groundCheck.position,
-    //         0.2f, playerController.groundLayer);
-    // }
-
     private void FixedUpdate()
     {
         if (playerController.isGrounded && playerStateMachine.GetCurrentState() == PlayerState.Jump)
