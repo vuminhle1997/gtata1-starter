@@ -19,7 +19,9 @@ public class JumpingHandler : StateHandler
 
     private void FixedUpdate()
     {
-        if (playerController.isGrounded && playerStateMachine.GetCurrentState() == PlayerState.Jump)
+        var currentState = playerStateMachine.GetCurrentState();
+        
+        if (playerController.isGrounded && currentState == PlayerState.Jump)
         {
             playerController.Jump();    
         }

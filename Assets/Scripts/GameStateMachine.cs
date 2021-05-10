@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachines: MonoBehaviour
+public class GameStateMachine: MonoBehaviour
 {
     [SerializeField] private GameState currentState;
     [SerializeField] private StateHandler playHandler;
-    [SerializeField] private StateHandler gameOverHandler;
     [SerializeField] private StateHandler pauseHandler;
     [SerializeField] private StateHandler menuHandler;
+    [SerializeField] private StateHandler winningHandler;
+    [SerializeField] private StateHandler gameOverHandler;
 
     /// <summary>
     /// Go back to main menu!
@@ -40,12 +41,20 @@ public class StateMachines: MonoBehaviour
         switch (triggerType)
         {
             case GameTransition.ResumePlaying:
-                if (currentState == GameState.Play || currentState == GameState.Pause)
+                if (currentState == GameState.Pause)
                 {
                     TransitionTo(GameState.Play, payload);
                     return true;
                 }
                 
+                return false;
+            case GameTransition.StopPlaying:
+                if (currentState == GameState.Play)
+                {
+                    TransitionTo(GameState.Pause, payload);
+                    return true;
+                }
+
                 return false;
         }
         return false;
@@ -73,14 +82,21 @@ public class StateMachines: MonoBehaviour
         {
             case GameState.Play:
                 return playHandler;
-            case GameState.GameOver:
-                return gameOverHandler;
             case GameState.Pause:
                 return pauseHandler;
             case GameState.Menu:
                 return menuHandler;
+            case GameState.Winning:
+                return winningHandler;
+            case GameState.GameOver:
+                return gameOverHandler;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
+    }
+
+    public GameState GetCurrentState()
+    {
+        return currentState;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    [SerializeField] private GameStateMachine gameStateMachine;
     [SerializeField] private PlayerStateMachine stateMachine;
     // Start is called before the first frame update
     private float moveSpeed;
@@ -31,7 +31,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dirX = Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime;
+        var gameState = gameStateMachine.GetCurrentState();
+        if (gameState == GameState.Play)
+        {
+            dirX = Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime;
+        }
+        else
+        {
+            dirX = 0;
+            return;
+        }
         
         // triggers walking or idle transition
         if (dirX == 0)
@@ -52,6 +61,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            SetMoveSpeed(350f);
+        }
+        else
+        {
+            SetMoveSpeed(100f);
+        }
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         // transition to falling down state
         if (!isGrounded && stateMachine.GetCurrentState() == PlayerState.Jump)
@@ -71,5 +88,10 @@ public class PlayerController : MonoBehaviour
     public float GetDirX()
     {
         return dirX;
+    }
+
+    public void SetMoveSpeed(float val)
+    {
+        moveSpeed = val;
     }
 }

@@ -37,7 +37,8 @@ public enum GameTransition
     ShowGameOver,
     ShowIntro,
     ShowWinningScreen,
-    StartGame
+    StartGame,
+    ShowMenu
 }
 
 public interface IStateHandler
