@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    private bool originFlip = true;
 
     [SerializeField] public float jumpForce;
 
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     private void Awake()
     {
-        moveSpeed = 30f;
+        moveSpeed = 100f;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -41,9 +42,7 @@ public class PlayerController : MonoBehaviour
         {
             stateMachine.Trigger(PlayerTransition.IsWalking, null);
         }
-        
-        transform.position = new Vector2(transform.position.x + dirX, transform.position.y);
-        
+
         // triggers jumping transition
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -67,5 +66,10 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         rb.velocity = Vector2.up * jumpForce;
+    }
+
+    public float GetDirX()
+    {
+        return dirX;
     }
 }
