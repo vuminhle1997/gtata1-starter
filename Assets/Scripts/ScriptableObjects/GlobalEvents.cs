@@ -17,6 +17,11 @@ namespace ScriptableObjects
          * Event Parameters are of type int.
          */
         public static event Action<int> OnScoreChanged;
+        
+        /**
+         * Static event to trigger game pause. Can be called globally. Event does not care where it comes from.
+         */
+        public static event Action OnPauseGame;
 
         #endregion
 
@@ -29,6 +34,22 @@ namespace ScriptableObjects
         public static void TriggerScoreChange(int value)
         {
             OnScoreChanged?.Invoke(value);
+        }
+
+        /**
+         * Static trigger to execute game pause. Event can be fired globally.
+         */
+        public static void TriggerGamePause()
+        {
+            OnPauseGame?.Invoke();
+        }
+        
+        /**
+         * Static trigger to execute game exit. Event can be fired globally.
+         */
+        public static void TriggerGameExit()
+        {
+            Application.Quit();
         }
 
         #endregion
