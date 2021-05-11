@@ -1,4 +1,5 @@
 ﻿using System;
+using Persistence;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -11,19 +12,42 @@ namespace Score
     public class ScoreController : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI scoreTextGUI;
-        private int currentScore;
-        public int CurrentScore
+        private Score score;
+
+        [Header("Workarounds")] [SerializeField]
+        private bool loadScore;
+
+        #region Score Getter / Setter
+
+        /**
+         * Get current score value
+         */
+        public int GetScore()
         {
-            get => currentScore;
-            set => currentScore = value;
+            return score.CurrentScore;
         }
+
+        /**
+         * Set score to new value.
+         * <param name="value">New score value</param>
+         */
+        public void SetScore(int value)
+        {
+            score.CurrentScore = value;
+        }
+
+        #endregion
+        
         
         #region Awake Behaviour
-
-        // as default set current score to 0
+        
         private void Awake()
         {
-            CurrentScore = 0;
+            PersistenceHandler<Score>.SetupDirectories();
+            var startScore = PersistenceHandler<Score>.LoadData("currentScore") ?? new Score();
+            score = loadScore ? startScore : new Score();
+            // update score text on GUI once at awakening
+            scoreTextGUI.text = score.ToString();
         }
 
         #endregion
@@ -42,14 +66,22 @@ namespace Score
 
         #endregion
         
+        /**
+         * Add score change to current score
+         * convert current score to string and
+         * update score gui text
+         * <param name="value">Integer change to score</param>
+         */
         private void ExecuteScoreChanged(int value)
         {
-            // add score change to current score
-            // convert current score to string and
-            // update score gui text
-            
-            CurrentScore += value;
-            scoreTextGUI.text = CurrentScore.ToString();
+            SetScore(GetScore() + value);
+            scoreTextGUI.text = score.ToString();
+        }
+        
+        
+        private void OnApplicationQuit()
+        {
+            PersistenceHandler<Score>.SaveData(score, "currentScore");
         }
     }
 }

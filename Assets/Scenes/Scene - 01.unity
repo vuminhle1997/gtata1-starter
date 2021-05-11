@@ -1054,6 +1054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreTextGUI: {fileID: 381106269}
+  loadScore: 1
 --- !u!1 &1120039050
 GameObject:
   m_ObjectHideFlags: 0
