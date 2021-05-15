@@ -8,6 +8,7 @@ namespace Player
         [SerializeField] private Transform vaccineTip;
 
         [SerializeField] private GameObject vaccineBullet;
+        [SerializeField] private PlayerController _playerController;
 
         private Vector2 lookDirection;
         private float lookAngle;
@@ -15,7 +16,6 @@ namespace Player
 
         private void Update()
         {
-            var dir = Input.mousePosition;
             lookDirection = Input.mousePosition - Camera.main.ScreenToWorldPoint(transform.position);
             
             lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
@@ -25,7 +25,16 @@ namespace Player
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                FireVaccine();
+                var playerStats = _playerController.GetPlayerStats();
+                if (playerStats.GetBullets() > 0)
+                {
+                    FireVaccine();
+                    playerStats.ChangeBullets(-1);
+                }
+                else
+                {
+                    Debug.Log("Bullets are empty");
+                }
             }
         }
 

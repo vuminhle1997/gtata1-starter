@@ -3,9 +3,45 @@ using UnityEngine;
 
 namespace Player
 {
+    /// <summary>
+    /// Information about the player.
+    /// Contains health and current bullets.
+    /// </summary>
+    public class PlayerStats
+    {
+        private float _health;
+        private int _bullets;
+
+        public PlayerStats(float health, int bullets)
+        {
+            _health = health;
+            _bullets = bullets;
+        }
+
+        public float GetHealth()
+        {
+            return _health;
+        }
+
+        public void ChangeHealth(float health)
+        {
+            _health += health;
+        }
+
+        public int GetBullets()
+        {
+            return _bullets;
+        }
+
+        public void ChangeBullets(int bullets)
+        {
+            _bullets += bullets;
+        }
+    }
     public class PlayerController : MonoBehaviour
     {
-
+        private PlayerStats _playerStats;
+        
         [SerializeField] private PlayerStateMachine stateMachine;
         // Start is called before the first frame update
         private float moveSpeed;
@@ -22,6 +58,7 @@ namespace Player
         public LayerMask groundLayer;
         private void Awake()
         {
+            _playerStats = new PlayerStats(100f, 10);
             moveSpeed = 100f;
             rb = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -75,6 +112,11 @@ namespace Player
         public void TweakMovementSpeed(float val)
         {
             moveSpeed = val;
+        }
+
+        public PlayerStats GetPlayerStats()
+        {
+            return _playerStats;
         }
     }
 }

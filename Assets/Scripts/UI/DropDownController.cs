@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Persistence;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +8,7 @@ namespace UI
 {
     public class DropDownController : MonoBehaviour
     {
+        [SerializeField] private Settings _settings;
         /// <summary>
         /// source: https://www.youtube.com/watch?v=URS9A4V_yLc
         /// </summary>
@@ -39,12 +42,49 @@ namespace UI
             var i = dropDown.value;
         
             Debug.Log("Dropdown Selected: " + $"{dropDown.options[i].text}");
+            var settingsOptions = _settings.settingsOptions;
+            switch (i)
+            {
+                case 0:
+                    settingsOptions._difficulty = Difficulty.Easy;
+                    break;
+                case 1:
+                    settingsOptions._difficulty = Difficulty.Medium;
+                    break;
+                case 2:
+                    settingsOptions._difficulty = Difficulty.Hard;
+                    break;
+                default:
+                    throw new NotImplementedException("Not implemented");
+            }
         }
 
         private void InitDropDownValue(Dropdown dropDown)
         {
+            if (_settings.settingsOptions != null)
+            {
+                var settingsOptions = _settings.settingsOptions;
+                switch (settingsOptions._difficulty)
+                {
+                    case Difficulty.Easy:
+                        dropDown.value = 0;
+                        dropDown.captionText.text = dropDown.options[0].text;
+                        break;
+                    case Difficulty.Medium:
+                        dropDown.value = 1;
+                        dropDown.captionText.text = dropDown.options[1].text;
+                        break;
+                    case Difficulty.Hard:
+                        dropDown.value = 2;
+                        dropDown.captionText.text = dropDown.options[2].text;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                return;
+            }
             dropDown.value = 0;
-            dropDown.itemText.text = dropDown.options[0].text;
             dropDown.captionText.text = dropDown.options[0].text;
         }
     }

@@ -7,8 +7,9 @@ namespace Score
     [Serializable]
     public class Score
     {
+        [SerializeField] private String player;
         [SerializeField] private int currentScore;
-
+        
         public int CurrentScore
         {
             get => currentScore;
