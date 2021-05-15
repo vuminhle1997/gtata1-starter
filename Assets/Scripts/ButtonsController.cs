@@ -20,9 +20,4 @@ public class ButtonsController : MonoBehaviour
                 throw new NotImplementedException("No button logic implemented");
         }
     }
-
-    public void Foo(int i)
-    {
-        Debug.Log(i);
-    }
 }
