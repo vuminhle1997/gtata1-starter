@@ -60,7 +60,7 @@ namespace Persistence
             }
         }
 
-        private static SettingsOptions LoadSettings(string subPath)
+        public static SettingsOptions LoadSettings(string subPath)
         {
             var fullPath = Path.Combine(Application.persistentDataPath, subPath);
             using (var streamReader = File.OpenText(fullPath))
