@@ -3,7 +3,7 @@ using Player;
 using StateMachines;
 using UnityEngine;
 
-namespace Handlers
+namespace Handlers.PlayerHandler
 {
     public class JumpingHandler : StateHandler
     {

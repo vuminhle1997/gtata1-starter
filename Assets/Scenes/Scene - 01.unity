@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 2108180006}
+  idleSpriteGameObject: {fileID: 838850701}
 --- !u!114 &84915910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 2108180006}
+  walkingSpriteGameObject: {fileID: 157938178}
 --- !u!114 &84915911
 MonoBehaviour:
   m_ObjectHideFlags: 0

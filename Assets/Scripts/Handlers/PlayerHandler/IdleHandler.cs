@@ -3,19 +3,22 @@ using Player;
 using StateMachines;
 using UnityEngine;
 
-namespace Handlers
+namespace Handlers.PlayerHandler
 {
     public class IdleHandler : StateHandler
     {
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private GameObject idleSpriteGameObject;
         public override void OnExit()
         {
             Debug.Log("Exit State: "+$"{PlayerState.Idle}");
+            idleSpriteGameObject.SetActive(false);
         }
 
         public override void OnEnter(Dictionary<string, object> payload = null)
         {
             Debug.Log("Enter State: "+$"{PlayerState.Idle}");
+            idleSpriteGameObject.SetActive(true);
         }
     }
 }

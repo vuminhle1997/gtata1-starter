@@ -3,21 +3,23 @@ using Player;
 using StateMachines;
 using UnityEngine;
 
-namespace Handlers
+namespace Handlers.PlayerHandler
 {
     public class WalkingHandler : StateHandler
     {
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private GameObject walkingSpriteGameObject;
+        
         public override void OnEnter(Dictionary<string, object> payload = null)
         {
-            // throw new System.NotImplementedException();
             Debug.Log("Exit State: " + $"{PlayerState.Walk}");
+            walkingSpriteGameObject.SetActive(true);
         }
 
         public override void OnExit()
         {
-            // throw new System.NotImplementedException();
             Debug.Log("Enter State: " + $"{PlayerState.Walk}");
+            walkingSpriteGameObject.SetActive(false);
         }
 
         /// <summary>
