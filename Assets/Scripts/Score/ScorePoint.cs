@@ -4,23 +4,28 @@ using UnityEngine;
 
 namespace Score
 {
-    public class Score
+    public class ScorePoint
     {
-        private int currentScore;
+        private int _currentScore;
+
+        public ScorePoint()
+        {
+            _currentScore = 0;
+        }
 
         public void SetCurrentScore(int score)
         {
-            currentScore = score;
+            _currentScore = score;
         }
 
         public void AddCurrentScore(int score)
         {
-            currentScore += score;
+            _currentScore += score;
         }
 
         public int GetCurrentScore()
         {
-            return currentScore;
+            return _currentScore;
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿using System;
+using Score;
+using UnityEngine;
+
+namespace Game
+{
+    public class PointsTracker : MonoBehaviour
+    {
+        public ScorePoint playerScore;
+        private void Awake()
+        {
+            playerScore = new ScorePoint();
+        }
+    }
+}

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Enemy;
+using Game;
 using Persistence;
 using UnityEngine;
 using Random = System.Random;
@@ -11,6 +12,7 @@ public class GameWorldInitializer : MonoBehaviour
     public SettingsOptions settings;
     [SerializeField] private GameObject[] spawnAreas;
     [SerializeField] private GameObject[] enemiesObject;
+    [SerializeField] private PointsTracker _pointsTracker;
     
     public List<GameObject> placedAreas;
     public List<GameObject> placedEnemies;
@@ -54,6 +56,7 @@ public class GameWorldInitializer : MonoBehaviour
                 GameObject theSpawnedEnemy = Instantiate(enemyPrefabPreset, spawnLocation.transform);
             
                 theSpawnedEnemy.GetComponent<CovidEnemyScript>().InitCovidStats(difficulty);
+                theSpawnedEnemy.GetComponent<CovidEnemyScript>().SetPointsTracker(_pointsTracker);
                 placedEnemies.Add(theSpawnedEnemy);
             }
             return;
@@ -74,6 +77,8 @@ public class GameWorldInitializer : MonoBehaviour
             GameObject theSpawnedEnemy = Instantiate(enemyPrefabPreset, spawnLocation.transform);
             
             theSpawnedEnemy.GetComponent<CovidEnemyScript>().InitCovidStats(difficulty);
+            theSpawnedEnemy.GetComponent<CovidEnemyScript>().SetPointsTracker(_pointsTracker);
+            
             placedEnemies.Add(theSpawnedEnemy);
         }
     }

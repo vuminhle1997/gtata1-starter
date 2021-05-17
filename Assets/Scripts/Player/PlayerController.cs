@@ -11,8 +11,8 @@ namespace Player
     /// </summary>
     public class PlayerStats
     {
-        public float _health;
-        public int _bullets;
+        private float _health;
+        private int _bullets;
 
         public PlayerStats(float health, int bullets)
         {
@@ -42,7 +42,7 @@ namespace Player
     }
     public class PlayerController : MonoBehaviour
     {
-        public PlayerStats _playerStats;
+        private PlayerStats _playerStats;
         
         [SerializeField] private PlayerStateMachine stateMachine;
         // Start is called before the first frame update
@@ -50,7 +50,7 @@ namespace Player
         private float dirX, dirY;
 
         private Rigidbody2D rb;
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer spriteRenderer; // later for animation
         private bool originFlip = true;
 
         [SerializeField] public float jumpForce;
@@ -132,7 +132,7 @@ namespace Player
 
         private void CheckHealth()
         {
-            if (_playerStats._health <= 0f)
+            if (_playerStats.GetHealth() <= 0f)
             {
                 Destroy(gameObject);
             }

@@ -10,8 +10,9 @@ namespace StateMachines
         [SerializeField] private GameState currentState;
         [SerializeField] private StateHandler playHandler;
         [SerializeField] private StateHandler gameOverHandler;
-        [SerializeField] private StateHandler pauseHandler;
         [SerializeField] private StateHandler menuHandler;
+        [SerializeField] private StateHandler levelSuccessHandler;
+        [SerializeField] private StateHandler winningHandler;
 
         /// <summary>
         /// Go back to main menu!
@@ -19,16 +20,6 @@ namespace StateMachines
         public void Reset()
         {
             currentState = GameState.Menu;
-        }
-
-        public void RegisterHandler(GameState gameState, StateHandler stateHandler)
-        {
-            switch (gameState)
-            {
-                case GameState.Play:
-                    stateHandler.OnEnter();
-                    break;
-            }
         }
 
         /// <summary>
@@ -42,12 +33,20 @@ namespace StateMachines
             switch (triggerType)
             {
                 case GameTransition.ResumePlaying:
-                    if (currentState == GameState.Play || currentState == GameState.Pause)
+                    if (currentState == GameState.Play || currentState == GameState.Menu)
                     {
                         TransitionTo(GameState.Play, payload);
                         return true;
                     }
                 
+                    return false;
+                case GameTransition.PausePlaying:
+                    if (currentState == GameState.Play)
+                    {
+                        TransitionTo(GameState.Menu, payload);
+                        return true;
+                    }
+
                     return false;
             }
             return false;
@@ -75,12 +74,14 @@ namespace StateMachines
             {
                 case GameState.Play:
                     return playHandler;
-                case GameState.GameOver:
-                    return gameOverHandler;
-                case GameState.Pause:
-                    return pauseHandler;
                 case GameState.Menu:
                     return menuHandler;
+                case GameState.GameOver:
+                    return gameOverHandler;
+                case GameState.LevelSuccess:
+                    return levelSuccessHandler;
+                case GameState.Winning:
+                    return winningHandler;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }

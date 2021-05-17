@@ -8,9 +8,9 @@ namespace StateMachines
     {
         Play,
         GameOver,
-        Pause,
         Menu,
-        Winning
+        Winning,
+        LevelSuccess
     }
 
     public enum MenuState
@@ -49,10 +49,10 @@ namespace StateMachines
     public enum GameTransition
     {
         ResumePlaying,
-        StopPlaying,
+        PausePlaying,
         ShowGameOver,
-        ShowIntro,
         ShowWinningScreen,
-        StartGame
+        ShowLevelSuccess,
+        ReturnToMenu
     }
 }

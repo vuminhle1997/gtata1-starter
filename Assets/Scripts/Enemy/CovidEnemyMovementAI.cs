@@ -51,7 +51,6 @@ namespace Enemy
             var y = Math.Pow((originPos.y - newPos.y), 2);
 
             var d = Math.Sqrt(x + y);
-            Debug.Log(d);
             if (d >= 150f)
             {
                 moveForward = false;

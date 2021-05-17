@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 
 namespace Enemy
@@ -11,31 +12,38 @@ namespace Enemy
         Medium, 
         Hard
     }
-    public class CovidStats
-    {
-        public float moveSpeed;
-        public float health;
-        public EnemyDifficulty enemyDifficulty;
-
-        public CovidStats(float moveSpeed, float health, EnemyDifficulty enemyDifficulty)
-        {
-            this.health = moveSpeed;
-            this.health = health;
-            this.enemyDifficulty = enemyDifficulty;
-        }
-    }
+    
     public class CovidEnemyScript : MonoBehaviour
     {
         public float moveSpeed;
         public float health;
         public EnemyDifficulty enemyDifficulty;
-
+        private PointsTracker _pointsTracker;
         private void FixedUpdate()
         {
             if (health <= 0)
             {
-                Destroy(gameObject);
+                AddPointsBasedOnDifficulty();
+                
             }
+        }
+
+        private void AddPointsBasedOnDifficulty()
+        {
+            switch (enemyDifficulty)
+            {
+                case EnemyDifficulty.Easy:
+                    _pointsTracker.playerScore.AddCurrentScore(100);
+                    break;
+                case EnemyDifficulty.Medium:
+                    _pointsTracker.playerScore.AddCurrentScore(200);
+                    break;
+                case EnemyDifficulty.Hard:
+                    _pointsTracker.playerScore.AddCurrentScore(300);
+                    break;
+            }
+            
+            Destroy(gameObject);
         }
 
         public void InitCovidStats(Difficulty difficulty)
@@ -70,7 +78,14 @@ namespace Enemy
                 var vaccineGameObject = vaccineCollider.gameObject;
                 Destroy(vaccineGameObject);
                 health -= 1;
+                
+                _pointsTracker.playerScore.AddCurrentScore(100);
             }
+        }
+
+        public void SetPointsTracker(PointsTracker pointsTracker)
+        {
+            _pointsTracker = pointsTracker;
         }
     }
 }

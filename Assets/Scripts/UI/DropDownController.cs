@@ -6,8 +6,12 @@ using UnityEngine.UI;
 
 namespace UI
 {
+    /// <summary>
+    /// This class is responsible for the difficulty dropdown
+    /// </summary>
     public class DropDownController : MonoBehaviour
     {
+        // the setting's values
         [SerializeField] private Settings _settings;
         /// <summary>
         /// source: https://www.youtube.com/watch?v=URS9A4V_yLc
@@ -37,6 +41,11 @@ namespace UI
             );
         }
 
+        /// <summary>
+        /// Changes the difficulty
+        /// </summary>
+        /// <param name="dropDown"></param>
+        /// <exception cref="NotImplementedException"></exception>
         private void DropDownItemSelected(Dropdown dropDown)
         {
             var i = dropDown.value;
@@ -59,6 +68,11 @@ namespace UI
             }
         }
 
+        /// <summary>
+        /// Loads the selected difficulty of the player. If there are no settings locally store, choose EASY instead.
+        /// </summary>
+        /// <param name="dropDown"></param>
+        /// <exception cref="NotImplementedException"></exception>
         private void InitDropDownValue(Dropdown dropDown)
         {
             if (_settings.settingsOptions != null)
