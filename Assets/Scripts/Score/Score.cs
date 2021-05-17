@@ -4,35 +4,23 @@ using UnityEngine;
 
 namespace Score
 {
-    [Serializable]
     public class Score
     {
-        [SerializeField] private String player;
-        [SerializeField] private int currentScore;
-        
-        public int CurrentScore
+        private int currentScore;
+
+        public void SetCurrentScore(int score)
         {
-            get => currentScore;
-            set => currentScore = value;
+            currentScore = score;
         }
 
-        #region Constructors
-
-        public Score()
+        public void AddCurrentScore(int score)
         {
-            currentScore = 0;
+            currentScore += score;
         }
 
-        public Score(int value)
+        public int GetCurrentScore()
         {
-            currentScore = value;
-        }
-
-        #endregion
-
-        public override string ToString()
-        {
-            return CurrentScore.ToString();
+            return currentScore;
         }
     }
 }

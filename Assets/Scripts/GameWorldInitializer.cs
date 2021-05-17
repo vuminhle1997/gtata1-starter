@@ -49,8 +49,7 @@ public class GameWorldInitializer : MonoBehaviour
             foreach (var spawnLocation in spawnAreas)
             {
                 placedAreas.Add(spawnLocation);
-                Debug.Log(spawnLocation.transform.position);
-                
+
                 GameObject enemyPrefabPreset = enemiesObject[random.Next(enemiesObject.Length)];
                 GameObject theSpawnedEnemy = Instantiate(enemyPrefabPreset, spawnLocation.transform);
             
@@ -76,8 +75,6 @@ public class GameWorldInitializer : MonoBehaviour
             
             theSpawnedEnemy.GetComponent<CovidEnemyScript>().InitCovidStats(difficulty);
             placedEnemies.Add(theSpawnedEnemy);
-            
-            Debug.Log(spawnLocation.transform.position);
         }
     }
 }

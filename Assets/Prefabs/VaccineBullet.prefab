@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3066761281273024298}
   - component: {fileID: 2571434396411117992}
   - component: {fileID: 6932819420915113500}
+  - component: {fileID: 3325472941753315515}
   m_Layer: 0
   m_Name: VaccineBullet
   m_TagString: Untagged
@@ -117,3 +118,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e18ced03490be47b8dcc392b023a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &3325472941753315515
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615808608338793178}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.003950596, y: 1.094321}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.49845678, y: 0.07253088}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 2.56, y: 2.56}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.56, y: 2.56}
+  m_EdgeRadius: 0

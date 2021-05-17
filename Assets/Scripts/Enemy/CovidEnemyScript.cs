@@ -5,23 +5,37 @@ using UnityEngine;
 
 namespace Enemy
 {
+    public enum EnemyDifficulty
+    {
+        Easy,
+        Medium, 
+        Hard
+    }
     public class CovidStats
     {
         public float moveSpeed;
         public float health;
+        public EnemyDifficulty enemyDifficulty;
 
-        public CovidStats(float moveSpeed, float health)
+        public CovidStats(float moveSpeed, float health, EnemyDifficulty enemyDifficulty)
         {
             this.health = moveSpeed;
             this.health = health;
+            this.enemyDifficulty = enemyDifficulty;
         }
     }
     public class CovidEnemyScript : MonoBehaviour
     {
-        public CovidStats stats;
-        private void Awake()
+        public float moveSpeed;
+        public float health;
+        public EnemyDifficulty enemyDifficulty;
+
+        private void FixedUpdate()
         {
-            // InitCovidStats(loader.settings._difficulty);
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void InitCovidStats(Difficulty difficulty)
@@ -29,39 +43,34 @@ namespace Enemy
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    stats = new CovidStats(100f, 1);
+                    moveSpeed = 100f;
+                    health = 1;
+                    enemyDifficulty = EnemyDifficulty.Easy;
                     break;
                 case Difficulty.Medium:
-                    stats = new CovidStats(100f, 2);
+                    moveSpeed = 100f;
+                    health = 2;
+                    enemyDifficulty = EnemyDifficulty.Medium;
                     break;
                 case Difficulty.Hard:
-                    stats = new CovidStats(100f, 3);
+                    moveSpeed = 100f;
+                    health = 3;
+                    enemyDifficulty = EnemyDifficulty.Hard;
                     break;
                 default:
                     throw new NotImplementedException("Not implemented");
             }
-            
-            Debug.Log(stats.health);
         }
 
-        public void SetHealth(float health)
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            stats.health = health;
-        }
-
-        public void SetMoveSpeed(float moveSpeed)
-        {
-            stats.moveSpeed = moveSpeed;
-        }
-
-        public float GetHealth()
-        {
-            return stats.health;
-        }
-
-        public float GetMoveSpeed()
-        {
-            return stats.moveSpeed;
+            var vaccineCollider = other.contacts[0].collider;
+            if (vaccineCollider != null && vaccineCollider.name.ToLower().Contains("vaccine"))
+            {
+                var vaccineGameObject = vaccineCollider.gameObject;
+                Destroy(vaccineGameObject);
+                health -= 1;
+            }
         }
     }
 }
