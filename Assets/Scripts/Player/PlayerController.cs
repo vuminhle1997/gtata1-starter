@@ -90,13 +90,8 @@ namespace Player
 
         private void FixedUpdate()
         {
-            isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-            // transition to falling down state
-            if (!isGrounded && stateMachine.GetCurrentState() == PlayerState.Jump)
-            {
-                stateMachine.Trigger(PlayerTransition.IsFallingDown, null);
-            }
-            
+            // isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.5f, groundLayer);
+
             CheckHealth();
         }
 
@@ -104,6 +99,11 @@ namespace Player
         {
             foreach (var contactPoint2D in other.contacts)
             {
+                if (contactPoint2D.collider.name.ToLower().Contains("layer"))
+                {
+                    stateMachine.Trigger(PlayerTransition.IsFallingDown);
+                    continue;
+                }
                 if (contactPoint2D.collider.name.ToLower().Contains("enemy"))
                 {
                     var enemyGameObject = contactPoint2D.collider.gameObject;

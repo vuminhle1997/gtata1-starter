@@ -17,7 +17,6 @@ namespace UI
             switch (i)
             {
                 case 1:
-                    // todo: start game
                     Debug.Log("Start Game");
                     SceneManager.LoadScene("Scenes/Scene - 01", LoadSceneMode.Single);
                     break;

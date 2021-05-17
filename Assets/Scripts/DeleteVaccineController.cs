@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class DeleteVaccineController : MonoBehaviour
 {
-    private Vector2 originPos;
+    private Vector2 _originPos;
     private void Awake()
     {
-        originPos = transform.position;
+        _originPos = transform.position;
     }
 
     private void FixedUpdate()
@@ -24,8 +24,8 @@ public class DeleteVaccineController : MonoBehaviour
     private void TrackDistanceAndDeleteObject()
     {
         Vector2 newPos = transform.position;
-        var x = Math.Pow((originPos.x - newPos.x), 2);
-        var y = Math.Pow((originPos.y - newPos.y), 2);
+        var x = Math.Pow((_originPos.x - newPos.x), 2);
+        var y = Math.Pow((_originPos.y - newPos.y), 2);
 
         var d = Math.Sqrt(x + y);
         if (d >= 300f)

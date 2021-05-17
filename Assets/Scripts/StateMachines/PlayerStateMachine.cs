@@ -65,7 +65,8 @@ namespace StateMachines
                 case PlayerTransition.IsFallingDown:
                     if (currentState == PlayerState.Jump)
                     {
-                        StartCoroutine(DelayTransitionState(PlayerState.Idle, payload, 1f));
+                        TransitionTo(PlayerState.Idle, payload);
+                        // StartCoroutine(DelayTransitionState(PlayerState.Idle, payload, 1f));
                         return true;
                     }
 

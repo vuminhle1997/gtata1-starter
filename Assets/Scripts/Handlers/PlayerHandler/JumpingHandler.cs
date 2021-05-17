@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Player;
 using StateMachines;
 using UnityEngine;
@@ -9,23 +10,19 @@ namespace Handlers.PlayerHandler
     {
         [SerializeField] private PlayerStateMachine playerStateMachine;
         [SerializeField] private PlayerController playerController;
-    
+        [SerializeField] private GameObject jumpSpriteGameObject;
         public override void OnEnter(Dictionary<string, object> payload)
         {
             Debug.Log("Exit State: " + $"{PlayerState.Jump}");
+            jumpSpriteGameObject.SetActive(true);
+            
+            playerController.Jump();    
         }
 
         public override void OnExit()
         {
             Debug.Log("Enter State: " + $"{PlayerState.Jump}");
-        }
-
-        private void FixedUpdate()
-        {
-            if (playerController.isGrounded && playerStateMachine.GetCurrentState() == PlayerState.Jump)
-            {
-                playerController.Jump();    
-            }
+            jumpSpriteGameObject.SetActive(false);
         }
     }
 }
