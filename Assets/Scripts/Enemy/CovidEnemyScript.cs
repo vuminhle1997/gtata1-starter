@@ -24,7 +24,6 @@ namespace Enemy
             if (health <= 0)
             {
                 AddPointsBasedOnDifficulty();
-                
             }
         }
 

@@ -9,6 +9,7 @@ namespace Enemy
         private float dirX;
         private Vector2 originPos;
         public bool moveForward;
+        private bool _allowedToMove = true;
 
         private void Awake()
         {
@@ -21,7 +22,10 @@ namespace Enemy
         // Update is called once per frame
         void Update()
         {
-            MoveCovidEnemy();
+            if (_allowedToMove)
+            {
+                MoveCovidEnemy();
+            }
         }
 
         private void FixedUpdate()
@@ -61,6 +65,11 @@ namespace Enemy
             {
                 moveForward = true;
             }
+        }
+
+        public void SetAllowedToMove(bool val)
+        {
+            _allowedToMove = val;
         }
     }
 }

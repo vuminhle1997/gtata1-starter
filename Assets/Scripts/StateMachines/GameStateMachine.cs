@@ -22,6 +22,18 @@ namespace StateMachines
             currentState = GameState.Menu;
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && currentState == GameState.Play)
+            {
+                Trigger(GameTransition.PausePlaying);
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && currentState == GameState.Menu)
+            {
+                Trigger(GameTransition.ResumePlaying);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -85,6 +97,11 @@ namespace StateMachines
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
+        }
+
+        public GameState GetCurrentGameState()
+        {
+            return currentState;
         }
     }
 }

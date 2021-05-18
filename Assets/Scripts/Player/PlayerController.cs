@@ -45,12 +45,14 @@ namespace Player
         private PlayerStats _playerStats;
         
         [SerializeField] private PlayerStateMachine stateMachine;
+        [SerializeField] private GameStateMachine _gameStateMachine;
+
+        private GameState _currentGameState;
         // Start is called before the first frame update
         private float moveSpeed;
         private float dirX, dirY;
 
         private Rigidbody2D rb;
-        private SpriteRenderer spriteRenderer; // later for animation
         private bool originFlip = true;
 
         [SerializeField] public float jumpForce;
@@ -63,7 +65,7 @@ namespace Player
             _playerStats = new PlayerStats(100f, 10);
             moveSpeed = 100f;
             rb = GetComponent<Rigidbody2D>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            _currentGameState = _gameStateMachine.GetCurrentGameState();
         }
 
         // Update is called once per frame
@@ -82,7 +84,7 @@ namespace Player
             }
 
             // triggers jumping transition
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && _currentGameState == GameState.Play)
             {
                 stateMachine.Trigger(PlayerTransition.IsJumping, null);
             }
@@ -90,8 +92,17 @@ namespace Player
 
         private void FixedUpdate()
         {
+            _currentGameState = _gameStateMachine.GetCurrentGameState();
             // isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.5f, groundLayer);
-
+            if (_currentGameState == GameState.Menu)
+            {
+                moveSpeed = 0f;
+            }
+            else
+            {
+                moveSpeed = 100f;
+            }
+            
             CheckHealth();
         }
 
@@ -159,6 +170,11 @@ namespace Player
         public PlayerStats GetPlayerStats()
         {
             return _playerStats;
+        }
+
+        public GameState GetCurrentGameStateFromPlayerParent()
+        {
+            return _currentGameState;
         }
     }
 }

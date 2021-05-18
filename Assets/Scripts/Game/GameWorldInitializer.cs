@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Enemy;
 using Game;
 using Persistence;
+using StateMachines;
 using UnityEngine;
 using Random = System.Random;
 
@@ -13,6 +14,9 @@ public class GameWorldInitializer : MonoBehaviour
     [SerializeField] private GameObject[] spawnAreas;
     [SerializeField] private GameObject[] enemiesObject;
     [SerializeField] private PointsTracker _pointsTracker;
+    [SerializeField] private GameStateMachine _gameStateMachine;
+
+    private GameState _currentGameState;
     
     public List<GameObject> placedAreas;
     public List<GameObject> placedEnemies;
@@ -20,8 +24,22 @@ public class GameWorldInitializer : MonoBehaviour
     {
         var _settings = Settings.LoadSettings(Settings.PATH);
         settings = _settings;
+        _currentGameState = _gameStateMachine.GetCurrentGameState();
         
         SpawnEnemiesBasedOnDifficulty(_settings._difficulty);
+    }
+
+    private void Update()
+    {
+        var currentGameStateFrame = _gameStateMachine.GetCurrentGameState();
+        if (currentGameStateFrame == _currentGameState) return;
+        _currentGameState = currentGameStateFrame;
+        ChangeMovementBehaviourOfEnemies();
+    }
+
+    private void FixedUpdate()
+    {
+        ClearNullEnemies();
     }
 
     private void SpawnEnemiesBasedOnDifficulty(Difficulty difficulty)
@@ -80,6 +98,40 @@ public class GameWorldInitializer : MonoBehaviour
             theSpawnedEnemy.GetComponent<CovidEnemyScript>().SetPointsTracker(_pointsTracker);
             
             placedEnemies.Add(theSpawnedEnemy);
+        }
+    }
+
+    private void ChangeMovementBehaviourOfEnemies()
+    {
+        switch (_currentGameState)
+        {
+            case GameState.Menu:
+                foreach (var enemy in placedEnemies)
+                {
+                    enemy.GetComponent<CovidEnemyMovementAI>().SetAllowedToMove(false);
+                }
+
+                break;
+            case GameState.Play:
+                foreach (var enemy in placedEnemies)
+                {
+                    enemy.GetComponent<CovidEnemyMovementAI>().SetAllowedToMove(true);
+                }
+
+                break;
+            default:
+                throw new NotImplementedException("");
+        }
+    }
+
+    private void ClearNullEnemies()
+    {
+        foreach (var enemy in placedEnemies)
+        {
+            if (enemy == null)
+            {
+                placedEnemies.Remove(enemy);
+            }
         }
     }
 }

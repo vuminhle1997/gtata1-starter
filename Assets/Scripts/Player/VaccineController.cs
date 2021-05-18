@@ -1,4 +1,5 @@
 using System;
+using StateMachines;
 using UnityEngine;
 
 namespace Player
@@ -15,22 +16,26 @@ namespace Player
 
         private void Update()
         {
-            lookDirection = Input.mousePosition - Camera.main.ScreenToWorldPoint(transform.position);
-            
-            lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, lookAngle - 90f);
-
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            var currentGameState = _playerController.GetCurrentGameStateFromPlayerParent();
+            if (currentGameState == GameState.Play)
             {
-                var playerStats = _playerController.GetPlayerStats();
-                if (playerStats.GetBullets() > 0)
+                lookDirection = Input.mousePosition - Camera.main.ScreenToWorldPoint(transform.position);
+            
+                lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0f, 0f, lookAngle - 90f);
+
+                if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    FireVaccine();
-                    playerStats.ChangeBullets(-1);
-                }
-                else
-                {
-                    Debug.Log("Bullets are empty");
+                    var playerStats = _playerController.GetPlayerStats();
+                    if (playerStats.GetBullets() > 0)
+                    {
+                        FireVaccine();
+                        playerStats.ChangeBullets(-1);
+                    }
+                    else
+                    {
+                        Debug.Log("Bullets are empty");
+                    }
                 }
             }
         }
