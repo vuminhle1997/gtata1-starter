@@ -1,6 +1,7 @@
 using System;
 using StateMachines;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -9,32 +10,29 @@ namespace Player
         [SerializeField] private Transform vaccineTip;
 
         [SerializeField] private GameObject vaccineBullet;
-        [SerializeField] private PlayerController _playerController;
+        [SerializeField] private PlayerController playerController;
 
-        private Vector2 lookDirection;
-        private float lookAngle;
+        private Vector2 _lookDirection;
+        private float _lookAngle;
 
         private void Update()
         {
-            var currentGameState = _playerController.GetCurrentGameStateFromPlayerParent();
+            // source: https://answers.unity.com/questions/603757/2d-mouse-aiming.html
+            var currentGameState = playerController.GetCurrentGameStateFromPlayerParent();
             if (currentGameState == GameState.Play)
             {
-                lookDirection = Input.mousePosition - Camera.main.ScreenToWorldPoint(transform.position);
+                _lookDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
             
-                lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0f, 0f, lookAngle - 90f);
+                _lookAngle = Mathf.Atan2(_lookDirection.y, _lookDirection.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0f, 0f, _lookAngle - 90f);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    var playerStats = _playerController.GetPlayerStats();
+                    var playerStats = playerController.GetPlayerStats();
                     if (playerStats.GetBullets() > 0)
                     {
                         FireVaccine();
                         playerStats.ChangeBullets(-1);
-                    }
-                    else
-                    {
-                        Debug.Log("Bullets are empty");
                     }
                 }
             }

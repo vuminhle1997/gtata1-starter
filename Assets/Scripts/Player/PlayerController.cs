@@ -49,11 +49,10 @@ namespace Player
 
         private GameState _currentGameState;
         // Start is called before the first frame update
-        private float moveSpeed;
-        private float dirX, dirY;
+        private float _moveSpeed;
+        private float _dirX, _dirY;
 
-        private Rigidbody2D rb;
-        private bool originFlip = true;
+        private Rigidbody2D _rb;
 
         [SerializeField] public float jumpForce;
 
@@ -63,18 +62,18 @@ namespace Player
         private void Awake()
         {
             _playerStats = new PlayerStats(100f, 10);
-            moveSpeed = 100f;
-            rb = GetComponent<Rigidbody2D>();
+            _moveSpeed = 100f;
+            _rb = GetComponent<Rigidbody2D>();
             _currentGameState = _gameStateMachine.GetCurrentGameState();
         }
 
         // Update is called once per frame
         void Update()
         {
-            dirX = Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime;
+            _dirX = Input.GetAxisRaw("Horizontal") * _moveSpeed * Time.deltaTime;
         
             // triggers walking or idle transition
-            if (dirX == 0)
+            if (_dirX == 0)
             {
                 stateMachine.Trigger(PlayerTransition.IsIdle, null);
             }
@@ -97,10 +96,10 @@ namespace Player
             switch (_currentGameState)
             {
                 case GameState.Play:
-                    rb.WakeUp();
+                    _rb.WakeUp();
                     break;
                 case GameState.Menu:
-                    rb.Sleep();
+                    _rb.Sleep();
                     break;
             }
             
@@ -146,6 +145,7 @@ namespace Player
         {
             if (_playerStats.GetHealth() <= 0f)
             {
+                _gameStateMachine.Trigger(GameTransition.ShowGameOver);
                 Destroy(gameObject);
             }
         }
@@ -155,17 +155,17 @@ namespace Player
         /// </summary>
         public void Jump()
         {
-            rb.velocity = Vector2.up * jumpForce;
+            _rb.velocity = Vector2.up * jumpForce;
         }
 
         public float GetDirX()
         {
-            return dirX;
+            return _dirX;
         }
 
         public void TweakMovementSpeed(float val)
         {
-            moveSpeed = val;
+            _moveSpeed = val;
         }
 
         public PlayerStats GetPlayerStats()

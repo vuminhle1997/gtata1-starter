@@ -60,8 +60,33 @@ namespace StateMachines
                     }
 
                     return false;
+                case GameTransition.ShowGameOver:
+                    if (currentState == GameState.Play)
+                    {
+                        TransitionTo(GameState.GameOver, payload);
+                        return true;
+                    }
+
+                    return false;
+                case GameTransition.ShowLevelSuccess:
+                    if (currentState == GameState.Play)
+                    {
+                        TransitionTo(GameState.LevelSuccess, payload);
+                        return true;
+                    }
+
+                    return false;
+                case GameTransition.ShowWinningScreen:
+                    if (currentState == GameState.Play)
+                    {
+                        TransitionTo(GameState.Winning, payload);
+                        return true;
+                    }
+
+                    return false;
+                default:
+                    throw new NotImplementedException();
             }
-            return false;
         }
 
         private void TransitionTo(GameState newState, Dictionary<string, object> payload)

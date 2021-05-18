@@ -7,18 +7,18 @@ namespace Animations
     {
         private void Awake()
         {
-            _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         }
 
         private  void Update()
         {
-            _timer += Time.deltaTime;
+            Timer += Time.deltaTime;
 
-            if (_timer >= _frameRate)
+            if (Timer >= FrameRate)
             {
-                _timer -= _frameRate;
-                _currentSprite = (_currentSprite + 1) % sprites.Length;
-                _spriteRenderer.sprite = sprites[_currentSprite];
+                Timer -= FrameRate;
+                CurrentSprite = (CurrentSprite + 1) % sprites.Length;
+                SpriteRenderer.sprite = sprites[CurrentSprite];
             }
         }
     }

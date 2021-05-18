@@ -17,6 +17,12 @@ namespace UI.Points
 
         private void Update()
         {
+            var gameObjectName = gameObject.name;
+            if (gameObjectName == "Points")
+            {
+                _pointsUI.text = $"{pointsTracker.playerScore.GetCurrentScore()}" + "Pts";
+                return;
+            }
             _pointsUI.text = $"{pointsTracker.playerScore.GetCurrentScore()}";
         }
     }

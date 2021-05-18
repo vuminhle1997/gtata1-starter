@@ -6,10 +6,10 @@ namespace Animations
     {
         // source: https://www.youtube.com/watch?v=Ap8bGol7qBk
         [SerializeField] protected Sprite[] sprites;
-        protected int _currentSprite;
-        protected float _timer;
-        protected float _frameRate = 1.25f;
+        protected int CurrentSprite;
+        protected float Timer;
+        protected float FrameRate = 1.25f;
 
-        protected SpriteRenderer _spriteRenderer;
+        protected SpriteRenderer SpriteRenderer;
     }
 }
