@@ -34,7 +34,7 @@ public class GameWorldInitializer : MonoBehaviour
         var currentGameStateFrame = _gameStateMachine.GetCurrentGameState();
         if (currentGameStateFrame == _currentGameState) return;
         _currentGameState = currentGameStateFrame;
-        ChangeMovementBehaviourOfEnemies();
+        InjectCurrentGameStateIntoEnemies();
     }
 
     private void FixedUpdate()
@@ -101,26 +101,11 @@ public class GameWorldInitializer : MonoBehaviour
         }
     }
 
-    private void ChangeMovementBehaviourOfEnemies()
+    private void InjectCurrentGameStateIntoEnemies()
     {
-        switch (_currentGameState)
+        foreach (var enemy in placedEnemies)
         {
-            case GameState.Menu:
-                foreach (var enemy in placedEnemies)
-                {
-                    enemy.GetComponent<CovidEnemyMovementAI>().SetAllowedToMove(false);
-                }
-
-                break;
-            case GameState.Play:
-                foreach (var enemy in placedEnemies)
-                {
-                    enemy.GetComponent<CovidEnemyMovementAI>().SetAllowedToMove(true);
-                }
-
-                break;
-            default:
-                throw new NotImplementedException("");
+            enemy.GetComponent<CovidEnemyMovementAI>().SetCurrentGameState(_currentGameState);
         }
     }
 

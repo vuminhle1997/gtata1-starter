@@ -19,5 +19,4 @@ public class ButtonsController : MonoBehaviour
             default:
                 throw new NotImplementedException("No button logic implemented");
         }
-    }
-}
+    }}

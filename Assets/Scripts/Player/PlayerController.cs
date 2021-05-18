@@ -94,13 +94,14 @@ namespace Player
         {
             _currentGameState = _gameStateMachine.GetCurrentGameState();
             // isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.5f, groundLayer);
-            if (_currentGameState == GameState.Menu)
+            switch (_currentGameState)
             {
-                moveSpeed = 0f;
-            }
-            else
-            {
-                moveSpeed = 100f;
+                case GameState.Play:
+                    rb.WakeUp();
+                    break;
+                case GameState.Menu:
+                    rb.Sleep();
+                    break;
             }
             
             CheckHealth();

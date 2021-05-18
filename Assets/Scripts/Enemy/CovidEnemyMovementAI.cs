@@ -1,4 +1,5 @@
 using System;
+using StateMachines;
 using UnityEngine;
 
 namespace Enemy
@@ -9,7 +10,8 @@ namespace Enemy
         private float dirX;
         private Vector2 originPos;
         public bool moveForward;
-        private bool _allowedToMove = true;
+        private GameState currentGameState;
+        private Rigidbody2D rb;
 
         private void Awake()
         {
@@ -17,14 +19,23 @@ namespace Enemy
             dirX = transform.position.x;
             originPos = transform.position;
             moveForward = true;
+            rb = gameObject.GetComponent<Rigidbody2D>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (_allowedToMove)
+            if (currentGameState == GameState.Play)
             {
+                if (!rb.IsAwake())
+                {
+                    rb.WakeUp();    
+                }
                 MoveCovidEnemy();
+            }
+            else if (currentGameState == GameState.Menu)
+            {
+                rb.Sleep();
             }
         }
 
@@ -67,9 +78,9 @@ namespace Enemy
             }
         }
 
-        public void SetAllowedToMove(bool val)
+        public void SetCurrentGameState(GameState state)
         {
-            _allowedToMove = val;
+            currentGameState = state;
         }
     }
 }
