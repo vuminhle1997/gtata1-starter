@@ -16,7 +16,7 @@ namespace UI.Bullets
             _bulletsUI = gameObject.GetComponent<TextMeshProUGUI>();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             _bulletsUI.text = "Bullets: " + $"{playerController.GetPlayerStats().GetBullets()}";
         }

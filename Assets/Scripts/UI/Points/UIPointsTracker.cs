@@ -13,6 +13,12 @@ namespace UI.Points
         private void Awake()
         {
             _pointsUI = gameObject.GetComponent<TextMeshProUGUI>();
+            
+            var gameObjectName = gameObject.name;
+            if (gameObjectName == "Points")
+            {
+                _pointsUI.text = $"{pointsTracker.playerScore.GetCurrentScore()}" + " Pts";
+            }
         }
 
         private void Update()
@@ -20,7 +26,6 @@ namespace UI.Points
             var gameObjectName = gameObject.name;
             if (gameObjectName == "Points")
             {
-                _pointsUI.text = $"{pointsTracker.playerScore.GetCurrentScore()}" + "Pts";
                 return;
             }
             _pointsUI.text = $"{pointsTracker.playerScore.GetCurrentScore()}";

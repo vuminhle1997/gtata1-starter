@@ -32,11 +32,11 @@ namespace Persistence
     public class Settings : MonoBehaviour
     {
         public SettingsOptions settingsOptions;
-        public static string PATH = "./json/settings.json";
+        public const string Path = "./json/settings.json";
 
         private void Awake()
         {
-            var _settingsOptions = LoadSettings(PATH);
+            var _settingsOptions = LoadSettings(Path);
             if (_settingsOptions != null)
             {
                 settingsOptions = _settingsOptions;
@@ -51,23 +51,19 @@ namespace Persistence
         public static void SaveSettings(SettingsOptions options, string subPath)
         {
             var jsonString = JsonUtility.ToJson(options);
-            var fullPath = Path.Combine(Application.persistentDataPath, subPath);
-            using (var streamWriter = File.CreateText(fullPath))
-            {
-                streamWriter.Write(jsonString);
+            var fullPath = System.IO.Path.Combine(Application.persistentDataPath, subPath);
+            using var streamWriter = File.CreateText(fullPath);
+            streamWriter.Write(jsonString);
                 
-                Debug.Log("Saved settings successful");
-            }
+            Debug.Log("Saved settings successful");
         }
 
         public static SettingsOptions LoadSettings(string subPath)
         {
-            var fullPath = Path.Combine(Application.persistentDataPath, subPath);
-            using (var streamReader = File.OpenText(fullPath))
-            {
-                var jsonString = streamReader.ReadToEnd();
-                return JsonUtility.FromJson<SettingsOptions>(jsonString);
-            }
+            var fullPath = System.IO.Path.Combine(Application.persistentDataPath, subPath);
+            using var streamReader = File.OpenText(fullPath);
+            var jsonString = streamReader.ReadToEnd();
+            return JsonUtility.FromJson<SettingsOptions>(jsonString);
         }
     }
 }

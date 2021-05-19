@@ -12,11 +12,11 @@ using UnityEngine;
 
         public float smoothSpeed = 0.125f;
         private static float zOffset = -230f;
-        private Vector3 offset = new Vector3(0, 0, zOffset);
+        private readonly Vector3 _offset = new Vector3(0, 0, zOffset);
 
         void LateUpdate()
         {
-            Vector3 desiredPosition = target.position + offset;
+            Vector3 desiredPosition = target.position + _offset;
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
             transform.position = smoothedPosition;
             transform.LookAt(target);

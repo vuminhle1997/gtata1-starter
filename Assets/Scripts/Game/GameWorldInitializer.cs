@@ -22,7 +22,7 @@ public class GameWorldInitializer : MonoBehaviour
     public List<GameObject> placedEnemies;
     private void Awake()
     {
-        var _settings = Settings.LoadSettings(Settings.PATH);
+        var _settings = Settings.LoadSettings(Settings.Path);
         settings = _settings;
         _currentGameState = _gameStateMachine.GetCurrentGameState();
         
