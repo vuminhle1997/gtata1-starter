@@ -1,6 +1,6 @@
 ﻿namespace Actor
 {
-    public abstract class ActorCommand
+    public abstract class ActorCommand: IActorCommand
     {
         protected IActor actor;
 

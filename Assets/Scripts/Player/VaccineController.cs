@@ -38,7 +38,7 @@ namespace Player
             }
         }
 
-        private void FireVaccine()
+        public void FireVaccine()
         {
             GameObject vaccine = Instantiate(vaccineBullet, vaccineTip.position, vaccineTip.rotation);
             vaccine.GetComponent<Rigidbody2D>().velocity = vaccineTip.up * 100f;

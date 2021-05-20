@@ -1,4 +1,5 @@
 using System;
+using Actor;
 using Enemy;
 using StateMachines;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         private PlayerStats _playerStats;
-        
+
         [SerializeField] private PlayerStateMachine stateMachine;
         [SerializeField] private GameStateMachine _gameStateMachine;
 
@@ -61,6 +62,7 @@ namespace Player
         public LayerMask groundLayer;
         private void Awake()
         {
+            
             _playerStats = new PlayerStats(100f, 10);
             _moveSpeed = 100f;
             _rb = GetComponent<Rigidbody2D>();

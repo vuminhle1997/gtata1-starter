@@ -20,7 +20,7 @@ namespace CameraFollow
         {
             Vector3 desiredPosition = target.position + _offset;
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-            transform.position = smoothedPosition;
+            transform.position = desiredPosition;
             transform.LookAt(target);
         }
     }
