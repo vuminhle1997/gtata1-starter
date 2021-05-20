@@ -2,6 +2,8 @@ using UnityEngine;
 
 // source: https://www.youtube.com/watch?v=MFQhpwc6cKE
 
+namespace CameraFollow
+{
     /// <summary>
     /// Script for "Main Camera"
     /// Follows the target a.k.a the player gameobject
@@ -22,4 +24,5 @@ using UnityEngine;
             transform.LookAt(target);
         }
     }
+}
 
