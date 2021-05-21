@@ -4,5 +4,7 @@
     {
         void Jump();
         void FireBullet();
+
+        void Run();
     }
 }

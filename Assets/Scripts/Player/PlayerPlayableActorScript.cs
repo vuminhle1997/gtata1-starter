@@ -13,6 +13,7 @@ namespace Player
         private float jumpForce = 125f;
         [SerializeField] private VaccineController vaccineController;
         [SerializeField] private PlayerStateMachine stateMachine;
+        [SerializeField] private PlayerController playerController;
 
         private void Awake()
         {
@@ -40,7 +41,12 @@ namespace Player
                 Bullets--;
             }
         }
-        
+
+        public override void Run()
+        {
+            playerController.IsRunning = true;
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             foreach (var contactPoint2D in other.contacts)

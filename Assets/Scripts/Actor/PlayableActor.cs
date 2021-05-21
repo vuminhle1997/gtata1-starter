@@ -7,6 +7,8 @@ namespace Actor
         public abstract void Jump();
         public abstract void FireBullet();
 
+        public abstract void Run();
+
         public float Health
         {
             get;

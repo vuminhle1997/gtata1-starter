@@ -15,12 +15,27 @@ namespace Player
         [SerializeField] private PlayableActor actor;
 
         private GameState currentGameState;
-        // Start is called before the first frame update
-        private float moveSpeed;
-        private float dirX;
+        private float MoveSpeed
+        {
+            get;
+            set;
+        }
+
+        private float RunningSpeed
+        {
+            get;
+            set;
+        }
+
+        public bool IsRunning
+        {
+            get;
+            set;
+        }
+        private float dirX, dirXAxis;
 
         private Rigidbody2D rb;
-        private IActorCommand jump, fire;
+        private IActorCommand jump, fire, run;
 
         public PlayableActor Actor
         {
@@ -28,21 +43,28 @@ namespace Player
             set => BindActor(value);
         }
 
-        private void OnEnable()
+        public LayerMask obstacleLayer;
+
+        void OnEnable()
         {
             BindActor(actor);
         }
 
-        private void Awake()
+        void Awake()
         {
-            moveSpeed = 100f;
+            IsRunning = false;
+            MoveSpeed = 100f;
+            RunningSpeed = 200f;
             rb = GetComponent<Rigidbody2D>();
             currentGameState = gameStateMachine.GetCurrentGameState();
         }
         
         void Update()
         {
-            dirX = Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime;
+            dirXAxis = Input.GetAxisRaw("Horizontal");
+            var isNearObstacle = GetsCollisionWithObstacle(dirXAxis, transform.position);
+
+            dirX = !isNearObstacle ? !IsRunning ? (dirXAxis * MoveSpeed * Time.deltaTime) : (dirXAxis * RunningSpeed * Time.deltaTime) : 0;
         
             // triggers walking or idle transition
             playerStateMachine.Trigger(dirX == 0 ? PlayerTransition.IsIdle : PlayerTransition.IsWalking, null);
@@ -51,7 +73,7 @@ namespace Player
             command?.Execute();
         }
 
-        private void FixedUpdate()
+        void FixedUpdate()
         {
             currentGameState = gameStateMachine.GetCurrentGameState();
             switch (currentGameState)
@@ -67,30 +89,16 @@ namespace Player
             CheckAliveCondition();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private Collider2D GetsCollisionWithObstacle(float dir, Vector2 vecPos)
         {
-            foreach (var go in other.contacts)
-            {
-                if (go.collider.gameObject.layer == Layers.Obstacle)
-                {
-                    Debug.Log("Runs against Wall");
-                    dirX = 0;
-                    moveSpeed = 0;
-                    return;
-                }
+            Vector2 lookPos = dir < 0 ? new Vector2(vecPos.x - 15, vecPos.y) : new Vector2(vecPos.x + 15, vecPos.y);
 
-                moveSpeed = 100f;
-            }
+            return Physics2D.OverlapCircle(lookPos, 7.5f, obstacleLayer);
         }
 
         public float GetDirX()
         {
             return dirX;
-        }
-
-        public void TweakMovementSpeed(float val)
-        {
-            moveSpeed = val;
         }
 
         public GameState GetCurrentGameStateFromPlayerParent()
@@ -111,14 +119,25 @@ namespace Player
                 return fire;
             }
 
+            var isRunning = Input.GetKey(KeyCode.LeftShift);
+            if (!isRunning)
+            {
+                IsRunning = false;
+            }
+            else
+            {
+                return run;
+            }
+
             return null;
         }
-        
+
         private void BindActor(IActor actor)
         {
             this.actor = actor as PlayableActor;
             jump = new JumpCommand(actor);
             fire = new FireCommand(actor);
+            run = new RunCommand(actor);
         }
 
         private void CheckAliveCondition()

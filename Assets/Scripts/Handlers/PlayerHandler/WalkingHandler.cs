@@ -39,23 +39,5 @@ namespace Handlers.PlayerHandler
             playerController.transform.position = new Vector2(playerController.transform.position.x + dirX, 
                 playerController.transform.position.y);
         }
-
-        /// <summary>
-        /// source: https://answers.unity.com/questions/1117035/how-to-flip-2d-character-walk-movement.html
-        /// </summary>
-        // private void FixedUpdate()
-        // {
-        //
-        //
-        //     var isShiftDown = Input.GetKey(KeyCode.LeftShift);
-        //     if (isShiftDown)
-        //     {
-        //         playerController.TweakMovementSpeed(250f);
-        //     }
-        //     else
-        //     {
-        //         playerController.TweakMovementSpeed(100f);
-        //     }
-        // }
     }
 }
