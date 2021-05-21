@@ -32,13 +32,13 @@ namespace Enemy
             switch (enemyDifficulty)
             {
                 case EnemyDifficulty.Easy:
-                    _pointsTracker.playerScore.AddCurrentScore(100);
+                    _pointsTracker.playerScore.CurrentScore += 100;
                     break;
                 case EnemyDifficulty.Medium:
-                    _pointsTracker.playerScore.AddCurrentScore(200);
+                    _pointsTracker.playerScore.CurrentScore += 200;
                     break;
                 case EnemyDifficulty.Hard:
-                    _pointsTracker.playerScore.AddCurrentScore(300);
+                    _pointsTracker.playerScore.CurrentScore += 300;
                     break;
             }
             
@@ -78,7 +78,7 @@ namespace Enemy
                 Destroy(vaccineGameObject);
                 health -= 1;
                 
-                _pointsTracker.playerScore.AddCurrentScore(100);
+                _pointsTracker.playerScore.CurrentScore += 100;
             }
         }
 

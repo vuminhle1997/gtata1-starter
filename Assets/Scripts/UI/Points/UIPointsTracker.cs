@@ -17,7 +17,7 @@ namespace UI.Points
             var gameObjectName = gameObject.name;
             if (gameObjectName == "Points")
             {
-                _pointsUI.text = $"{pointsTracker.playerScore.GetCurrentScore()}" + " Pts";
+                _pointsUI.text = $"{pointsTracker.playerScore.CurrentScore}" + " Pts";
             }
         }
 
@@ -28,7 +28,7 @@ namespace UI.Points
             {
                 return;
             }
-            _pointsUI.text = $"{pointsTracker.playerScore.GetCurrentScore()}";
+            _pointsUI.text = $"{pointsTracker.playerScore.CurrentScore}";
         }
     }
 }
