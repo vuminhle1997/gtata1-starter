@@ -15,8 +15,6 @@ namespace Handlers.PlayerHandler
         {
             Debug.Log("Exit State: " + $"{PlayerState.Jump}");
             jumpSpriteGameObject.SetActive(true);
-            
-            playerController.Jump();    
         }
 
         public override void OnExit()

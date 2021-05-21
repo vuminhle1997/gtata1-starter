@@ -18,7 +18,7 @@ namespace UI.Bullets
 
         private void Update()
         {
-            _bulletsUI.text = "Bullets: " + $"{playerController.GetPlayerStats().GetBullets()}";
+            _bulletsUI.text = "Bullets: " + $"{playerController.Actor.Bullets}";
         }
     }
 }

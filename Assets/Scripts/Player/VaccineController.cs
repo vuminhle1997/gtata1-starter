@@ -25,16 +25,6 @@ namespace Player
             
                 _lookAngle = Mathf.Atan2(_lookDirection.y, _lookDirection.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0f, 0f, _lookAngle - 90f);
-
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    var playerStats = playerController.GetPlayerStats();
-                    if (playerStats.GetBullets() > 0)
-                    {
-                        FireVaccine();
-                        playerStats.ChangeBullets(-1);
-                    }
-                }
             }
         }
 

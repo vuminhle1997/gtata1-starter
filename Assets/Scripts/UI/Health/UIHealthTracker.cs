@@ -17,7 +17,7 @@ namespace UI.Health
         
         private void Update()
         {
-            var health = (int) playerController.GetPlayerStats().GetHealth();
+            var health = (int) playerController.Actor.Health;
 
             if (health <= 0f)
             {

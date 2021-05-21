@@ -18,5 +18,11 @@ namespace Actor
             get;
             set;
         }
+
+        public int Bullets
+        {
+            get;
+            set;
+        }
     }
 }

@@ -52,14 +52,5 @@ namespace Handlers.PlayerHandler
                 playerController.TweakMovementSpeed(100f);
             }
         }
-
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            foreach (var child in other.contacts)
-            {
-                Debug.Log(child);
-            }
-        }
     }
-    
 }
