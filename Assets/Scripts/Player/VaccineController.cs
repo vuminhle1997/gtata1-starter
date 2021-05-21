@@ -21,8 +21,10 @@ namespace Player
             var currentGameState = playerController.GetCurrentGameStateFromPlayerParent();
             if (currentGameState != GameState.Play) return;
             _lookDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-            
+
             _lookAngle = Mathf.Atan2(_lookDirection.y, _lookDirection.x) * Mathf.Rad2Deg;
+                
+                Debug.Log(_lookAngle);
             transform.rotation = Quaternion.Euler(0f, 0f, _lookAngle - 90f);
         }
 

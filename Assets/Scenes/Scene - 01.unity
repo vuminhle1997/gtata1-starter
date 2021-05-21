@@ -414,7 +414,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2108180005}
-  smoothSpeed: 0.125
 --- !u!1 &53132938
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +652,14 @@ PrefabInstance:
     - target: {fileID: 6732927947660056252, guid: 90f469f6ed3b817418d60343af7f02c0, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977539431856490444, guid: 90f469f6ed3b817418d60343af7f02c0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977539431856490444, guid: 90f469f6ed3b817418d60343af7f02c0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90f469f6ed3b817418d60343af7f02c0, type: 3}
@@ -899,7 +906,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 5005150902092645517, guid: 3e65fa57a6e50cb49a134eb8a926915e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3600,7 +3607,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6aa4ccc795b9dcc43baf080ccef374e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3869,7 +3876,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7323919050132921535, guid: 3e65fa57a6e50cb49a134eb8a926915e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5338,7 +5345,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 912156542546916991, guid: 3e65fa57a6e50cb49a134eb8a926915e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8434,6 +8441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vaccineController: {fileID: 711130445}
   stateMachine: {fileID: 84915908}
+  playerController: {fileID: 2108180006}
 --- !u!4 &2108180005
 Transform:
   m_ObjectHideFlags: 0
@@ -8466,6 +8474,9 @@ MonoBehaviour:
   playerStateMachine: {fileID: 84915908}
   gameStateMachine: {fileID: 1233873829}
   actor: {fileID: 2108180003}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!50 &2108180007
 Rigidbody2D:
   serializedVersion: 4

@@ -9,7 +9,7 @@ namespace Enemy
         private CovidEnemyScript _covidEnemyScript;
         private float _dirX;
         private Vector2 _originPos;
-        public bool moveForward;
+        private bool moveForward;
         private GameState _currentGameState;
         private Rigidbody2D _rb;
 

@@ -11,8 +11,6 @@ namespace CameraFollow
     public class CameraFollow : MonoBehaviour
     {
         public Transform target;
-
-        public float smoothSpeed = 0.125f;
         private static float zOffset = -230f;
         private readonly Vector3 _offset = new Vector3(0, 0, zOffset);
 

@@ -1,10 +1,6 @@
-using System;
 using Actor;
-using Enemy;
 using StateMachines;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Utils;
 
 namespace Player
 {
@@ -61,6 +57,8 @@ namespace Player
         
         void Update()
         {
+            CheckAliveCondition();
+            
             dirXAxis = Input.GetAxisRaw("Horizontal");
             var isNearObstacle = GetsCollisionWithObstacle(dirXAxis, transform.position);
 
@@ -85,15 +83,6 @@ namespace Player
                     rb.Sleep();
                     break;
             }
-            
-            CheckAliveCondition();
-        }
-
-        private Collider2D GetsCollisionWithObstacle(float dir, Vector2 vecPos)
-        {
-            Vector2 lookPos = dir < 0 ? new Vector2(vecPos.x - 15, vecPos.y) : new Vector2(vecPos.x + 15, vecPos.y);
-
-            return Physics2D.OverlapCircle(lookPos, 7.5f, obstacleLayer);
         }
 
         public float GetDirX()
@@ -145,6 +134,13 @@ namespace Player
             if (actor.Alive) return;
             gameStateMachine.Trigger(GameTransition.ShowGameOver);
             Destroy(gameObject);
+        }
+        
+        private Collider2D GetsCollisionWithObstacle(float dir, Vector2 vecPos)
+        {
+            Vector2 lookPos = dir < 0 ? new Vector2(vecPos.x - 15, vecPos.y) : new Vector2(vecPos.x + 15, vecPos.y);
+
+            return Physics2D.OverlapCircle(lookPos, 7.5f, obstacleLayer);
         }
     }
 }

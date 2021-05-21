@@ -1,4 +1,3 @@
-using System;
 using Actor;
 using Enemy;
 using StateMachines;
