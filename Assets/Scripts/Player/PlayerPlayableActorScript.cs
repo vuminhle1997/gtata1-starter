@@ -3,6 +3,7 @@ using Actor;
 using Enemy;
 using StateMachines;
 using UnityEngine;
+using Utils;
 
 namespace Player
 {
@@ -44,12 +45,12 @@ namespace Player
         {
             foreach (var contactPoint2D in other.contacts)
             {
-                if (contactPoint2D.collider.name.ToLower().Contains("layer"))
+                if (contactPoint2D.collider.gameObject.layer == Layers.Ground)
                 {
                     stateMachine.Trigger(PlayerTransition.IsFallingDown);
                     continue;
                 }
-                if (contactPoint2D.collider.name.ToLower().Contains("enemy"))
+                if (contactPoint2D.collider.gameObject.layer == Layers.Enemy)
                 {
                     var enemyGameObject = contactPoint2D.collider.gameObject;
 

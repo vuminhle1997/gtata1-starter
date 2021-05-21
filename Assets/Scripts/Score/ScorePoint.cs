@@ -6,26 +6,26 @@ namespace Score
 {
     public class ScorePoint
     {
-        private int _currentScore;
+        private int currentScore;
 
         public ScorePoint()
         {
-            _currentScore = 0;
+            currentScore = 0;
         }
 
         public void SetCurrentScore(int score)
         {
-            _currentScore = score;
+            currentScore = score;
         }
 
         public void AddCurrentScore(int score)
         {
-            _currentScore += score;
+            currentScore += score;
         }
 
         public int GetCurrentScore()
         {
-            return _currentScore;
+            return currentScore;
         }
     }
 }

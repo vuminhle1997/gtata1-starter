@@ -424,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 53132939}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8463,8 +8463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb937cc9274297e4b97127eb46b8a162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateMachine: {fileID: 84915908}
-  _gameStateMachine: {fileID: 1233873829}
+  playerStateMachine: {fileID: 84915908}
+  gameStateMachine: {fileID: 1233873829}
   actor: {fileID: 2108180003}
 --- !u!50 &2108180007
 Rigidbody2D:

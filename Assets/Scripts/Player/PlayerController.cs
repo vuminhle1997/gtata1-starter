@@ -3,23 +3,25 @@ using Actor;
 using Enemy;
 using StateMachines;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Utils;
 
 namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private PlayerStateMachine stateMachine;
-        [SerializeField] private GameStateMachine _gameStateMachine;
+        [SerializeField] private PlayerStateMachine playerStateMachine;
+        [SerializeField] private GameStateMachine gameStateMachine;
         [SerializeField] private PlayableActor actor;
 
-        private GameState _currentGameState;
+        private GameState currentGameState;
         // Start is called before the first frame update
-        private float _moveSpeed;
-        private float _dirX;
+        private float moveSpeed;
+        private float dirX;
 
-        private Rigidbody2D _rb;
+        private Rigidbody2D rb;
         private IActorCommand jump, fire;
-        
+
         public PlayableActor Actor
         {
             get => actor;
@@ -33,18 +35,17 @@ namespace Player
 
         private void Awake()
         {
-            _moveSpeed = 100f;
-            _rb = GetComponent<Rigidbody2D>();
-            _currentGameState = _gameStateMachine.GetCurrentGameState();
+            moveSpeed = 100f;
+            rb = GetComponent<Rigidbody2D>();
+            currentGameState = gameStateMachine.GetCurrentGameState();
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
-            _dirX = Input.GetAxisRaw("Horizontal") * _moveSpeed * Time.deltaTime;
+            dirX = Input.GetAxisRaw("Horizontal") * moveSpeed * Time.deltaTime;
         
             // triggers walking or idle transition
-            stateMachine.Trigger(_dirX == 0 ? PlayerTransition.IsIdle : PlayerTransition.IsWalking, null);
+            playerStateMachine.Trigger(dirX == 0 ? PlayerTransition.IsIdle : PlayerTransition.IsWalking, null);
 
             var command = GetCommand();
             command?.Execute();
@@ -52,40 +53,56 @@ namespace Player
 
         private void FixedUpdate()
         {
-            _currentGameState = _gameStateMachine.GetCurrentGameState();
-            // isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.5f, groundLayer);
-            switch (_currentGameState)
+            currentGameState = gameStateMachine.GetCurrentGameState();
+            switch (currentGameState)
             {
                 case GameState.Play:
-                    _rb.WakeUp();
+                    rb.WakeUp();
                     break;
                 case GameState.Menu:
-                    _rb.Sleep();
+                    rb.Sleep();
                     break;
             }
             
             CheckAliveCondition();
         }
-        
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            foreach (var go in other.contacts)
+            {
+                if (go.collider.gameObject.layer == Layers.Obstacle)
+                {
+                    Debug.Log("Runs against Wall");
+                    dirX = 0;
+                    moveSpeed = 0;
+                    return;
+                }
+
+                moveSpeed = 100f;
+            }
+        }
+
         public float GetDirX()
         {
-            return _dirX;
+            return dirX;
         }
 
         public void TweakMovementSpeed(float val)
         {
-            _moveSpeed = val;
+            moveSpeed = val;
         }
 
         public GameState GetCurrentGameStateFromPlayerParent()
         {
-            return _currentGameState;
+            return currentGameState;
         }
 
         private IActorCommand GetCommand()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                playerStateMachine.Trigger(PlayerTransition.IsJumping);
                 return jump;
             }
 
@@ -107,7 +124,7 @@ namespace Player
         private void CheckAliveCondition()
         {
             if (actor.Alive) return;
-            _gameStateMachine.Trigger(GameTransition.ShowGameOver);
+            gameStateMachine.Trigger(GameTransition.ShowGameOver);
             Destroy(gameObject);
         }
     }
