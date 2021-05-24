@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using Persistence;
-using UnityEngine;
 
 namespace Score
 {
+    /// <summary>
+    /// Class for containing the playername and current score, needed for other components
+    /// </summary>
     public class ScorePoint
     {
         public ScorePoint()
@@ -29,6 +27,10 @@ namespace Score
         }
     }
 
+    /// <summary>
+    /// Only needed for saving/loading HighScore. Same as HighScore.
+    /// I don't know, but I needed to make another class for serialization.
+    /// </summary>
     [Serializable]
     public class HighScore
     {
@@ -41,6 +43,11 @@ namespace Score
             this.name = name;
         }
     }
+    
+    /// <summary>
+    /// High Score ladder.
+    /// Contains list of scores (score and username of player)
+    /// </summary>
     [Serializable]
     public class HighScoreLadder
     {
@@ -51,6 +58,10 @@ namespace Score
             this.highScores = new List<HighScore>();
         }
 
+        /// <summary>
+        /// Adds score and player name to ladder
+        /// </summary>
+        /// <param name="player"></param>
         public void AddHighScore(HighScore player)
         {
             highScores.Add(player);

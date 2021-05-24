@@ -9,7 +9,6 @@ namespace StateMachines
     {
         [SerializeField] private MenuState currentState;
         [SerializeField] private StateHandler menuHandler, optionHandler, highScoreHandler;
-        [SerializeField] private GameObject mainMenu, optionMenu, highScorePanel;
 
         private void Awake()
         {
@@ -77,31 +76,6 @@ namespace StateMachines
                     return highScoreHandler;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-        }
-
-        public void DisableGameObject(GameObject obj)
-        {
-            obj.SetActive(false);
-        }
-
-        public void EnableGameObject(GameObject obj)
-        {
-            obj.SetActive(true);
-        }
-
-        public GameObject GetGameObject(MenuState type)
-        {
-            switch (type)
-            {
-                case MenuState.Menu:
-                    return mainMenu;
-                case MenuState.Option:
-                    return optionMenu;
-                case MenuState.HighScore:
-                    return highScorePanel;
-                default:
-                    throw new NotImplementedException("Not implemented");
             }
         }
     }

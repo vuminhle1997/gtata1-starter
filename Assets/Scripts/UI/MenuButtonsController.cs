@@ -17,27 +17,25 @@ namespace UI
             switch (i)
             {
                 case 1:
-                    Debug.Log("Start Game");
                     SceneManager.LoadScene("Scenes/Scene - 01", LoadSceneMode.Single);
                     break;
                 case 2:
-                    Debug.Log("Enter option panel");
                     Dictionary<string, object> payload = new Dictionary<string, object>();
                     menuStateMachine.Trigger(MenuStateTransition.ShowOptions, payload);
                     break;
                 case 3:
-                    // todo: go back to main menu
-                    Debug.Log("Go back to menu");
                     Dictionary<string, object> _payload = new Dictionary<string, object>();
                     menuStateMachine.Trigger(MenuStateTransition.ShowMenu, _payload);
                     break;
                 case 4:
-                    Debug.Log("Enter HighScore board");
                     menuStateMachine.Trigger(MenuStateTransition.ShowHighscore);
                     break;
                 case 5:
-                    // todo: exit game
-                    Debug.Log("Exit Game");
+                    #if UNITY_EDITOR
+                        Debug.Log("Quit Game");
+                    #elif UNITY_STANDALONE
+                        Application.Quit(); 
+                    #endif
                     break;
                 default:
                     throw new NotImplementedException("Not implemented");

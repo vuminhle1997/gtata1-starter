@@ -6,8 +6,12 @@ namespace Score
     public class ScorePointSerializerController: MonoBehaviour
     {
         public HighScoreLadder highScoreLadder;
+            
+#if UNITY_EDITOR
         public const string Path = "./json/highscore.json";
-
+#elif UNITY_STANDALONE
+        public const string Path = "./json/highscore.json";
+#endif
         private void OnEnable()
         {
             var _highScoreLadder = LoadHighScoreLadder(Path);
