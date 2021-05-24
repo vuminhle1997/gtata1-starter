@@ -9,24 +9,17 @@ namespace UI
     {
         [SerializeField] private UIInputFieldController uiInputFieldController;
         [SerializeField] private PointsTracker pointsTracker;
+        [SerializeField] private ScorePointSerializerController scorePointSerializerController;
 
         public void OnClick(int i)
         {
-            HighScoreLadder highScoreLadder;
-            var loadedHighScoreLadder = ScorePointSerializer.LoadHighScoreLadder(ScorePointSerializer.Path);
-            pointsTracker.playerScore.Name = uiInputFieldController.GetName();
-            if (loadedHighScoreLadder != null)
-            {
-                highScoreLadder = loadedHighScoreLadder;
-            }
-            else
-            {
-                highScoreLadder = new HighScoreLadder();
-            }
             switch (i)
             {
                 case 1:
-                    ScorePointSerializer.AddPlayerToLadder(highScoreLadder,pointsTracker.playerScore);
+                    HighScore player = new HighScore(pointsTracker.playerScore.CurrentScore,
+                        uiInputFieldController.GetName());
+                    scorePointSerializerController.AddPlayerToLadder(player);
+                    scorePointSerializerController.SaveSettings(ScorePointSerializerController.Path);
                     SceneManager.LoadScene("GameMenu", LoadSceneMode.Single);
                     break;
             }

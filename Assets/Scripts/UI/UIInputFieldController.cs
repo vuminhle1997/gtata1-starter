@@ -25,29 +25,6 @@ namespace UI
             pointsTracker.playerScore.Name = name;
         }
 
-        public void OnClick(int i)
-        {
-            Debug.Log("CLICK");
-            HighScoreLadder highScoreLadder;
-            var loadedHighScoreLadder = ScorePointSerializer.LoadHighScoreLadder(ScorePointSerializer.Path);
-            if (loadedHighScoreLadder != null)
-            {
-                highScoreLadder = loadedHighScoreLadder;
-            }
-            else
-            {
-                highScoreLadder = new HighScoreLadder();
-            }
-            switch (i)
-            {
-                case 1:
-                    Debug.Log("CLICK");
-                    ScorePointSerializer.AddPlayerToLadder(highScoreLadder,pointsTracker.playerScore);
-                    SceneManager.LoadScene("GameMenu", LoadSceneMode.Single);
-                    break;
-            }
-        }
-
         public string GetName()
         {
             return name;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1250.0823, g: 1597.8466, b: 2177.6426, a: 1}
+  m_IndirectSpecularColor: {r: 1478.8682, g: 1831.9521, b: 2425.4668, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5996,6 +5996,7 @@ GameObject:
   - component: {fileID: 1377940109}
   - component: {fileID: 1377940108}
   - component: {fileID: 1377940110}
+  - component: {fileID: 1377940111}
   m_Layer: 5
   m_Name: GameOverScreen
   m_TagString: Untagged
@@ -6078,6 +6079,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiInputFieldController: {fileID: 1915557278}
   pointsTracker: {fileID: 849579594}
+  scorePointSerializerController: {fileID: 1377940111}
+--- !u!114 &1377940111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377940106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8eab2803ef344fd8b9a4c949767d8bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highScoreLadder:
+    highScores: []
 --- !u!1001 &1399665968
 PrefabInstance:
   m_ObjectHideFlags: 0
