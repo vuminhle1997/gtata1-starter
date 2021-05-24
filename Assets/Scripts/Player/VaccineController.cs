@@ -24,7 +24,7 @@ namespace Player
 
             _lookAngle = Mathf.Atan2(_lookDirection.y, _lookDirection.x) * Mathf.Rad2Deg;
                 
-                Debug.Log(_lookAngle);
+                // Debug.Log(_lookAngle);
             transform.rotation = Quaternion.Euler(0f, 0f, _lookAngle - 90f);
         }
 

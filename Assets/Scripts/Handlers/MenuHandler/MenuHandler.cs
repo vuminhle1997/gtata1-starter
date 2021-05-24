@@ -13,16 +13,12 @@ namespace Handlers
         public override void OnEnter(Dictionary<string, object> payload = null)
         {
             Debug.Log("Enter State: " + $"{MenuState.Menu}");
-            // var mainMenu = menuStateMachine.GetGameObject(MenuState.Menu);
-            // menuStateMachine.EnableGameObject(mainMenu);
             menuMainGameObject.SetActive(true);
         }
 
         public override void OnExit()
         {
             Debug.Log("Exit State: " + $"{MenuState.Menu}");
-            // var mainMenu = menuStateMachine.GetGameObject(MenuState.Menu);
-            // menuStateMachine.DisableGameObject(mainMenu);
             menuMainGameObject.SetActive(false);
         }
     }

@@ -1,6 +1,7 @@
 using Actor;
 using Enemy;
 using StateMachines;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Utils;
 
@@ -14,6 +15,9 @@ namespace Player
         [SerializeField] private PlayerStateMachine stateMachine;
         [SerializeField] private PlayerController playerController;
 
+        /// <summary>
+        /// Initialize player stats.
+        /// </summary>
         private void Awake()
         {
             Health = 100f;
@@ -27,6 +31,54 @@ namespace Player
             CheckHealth();
         }
 
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            foreach (var contactPoint2D in other.contacts)
+            {
+                // if player touches ground or an obstacle while jumping, switch to idle sprite 
+                if (contactPoint2D.collider.gameObject.layer == Layers.Ground || contactPoint2D.collider.gameObject.layer 
+                    == Layers.Obstacle)
+                {
+                    stateMachine.Trigger(PlayerTransition.IsFallingDown);
+                    continue;
+                }
+                // if the contact point is an enemy, take damage and destroy enemy
+                if (contactPoint2D.collider.gameObject.layer == Layers.Enemy)
+                {
+                    var enemyGameObject = contactPoint2D.collider.gameObject;
+
+                    var enemyScript = enemyGameObject.GetComponent<CovidEnemyScript>();
+                    var type = enemyScript.enemyDifficulty;
+
+                    switch (type)
+                    {
+                        case EnemyDifficulty.Easy:
+                            TakeDamage(-20f);
+                            break;
+                        case EnemyDifficulty.Medium:
+                            TakeDamage(-40f);
+                            break;
+                        case EnemyDifficulty.Hard:
+                            TakeDamage(-100f);
+                            break;
+                    }
+                    Destroy(enemyGameObject);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Check player's health!
+        /// If the HP is below 0, set Alive to false (player is dead)
+        /// </summary>
+        private void CheckHealth()
+        {
+            if (Health <= 0f)
+            {
+                Alive = false;
+            }
+        }
+        
         public override void Jump()
         {
             rb.velocity = Vector2.up * jumpForce;
@@ -44,47 +96,6 @@ namespace Player
         public override void Run()
         {
             playerController.IsRunning = true;
-        }
-
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            foreach (var contactPoint2D in other.contacts)
-            {
-                if (contactPoint2D.collider.gameObject.layer == Layers.Ground)
-                {
-                    stateMachine.Trigger(PlayerTransition.IsFallingDown);
-                    continue;
-                }
-                if (contactPoint2D.collider.gameObject.layer == Layers.Enemy)
-                {
-                    var enemyGameObject = contactPoint2D.collider.gameObject;
-
-                    var enemyScript = enemyGameObject.GetComponent<CovidEnemyScript>();
-                    var type = enemyScript.enemyDifficulty;
-
-                    switch (type)
-                    {
-                        case EnemyDifficulty.Easy:
-                            Health -= 20f;
-                            break;
-                        case EnemyDifficulty.Medium:
-                            Health -= 50f;
-                            break;
-                        case EnemyDifficulty.Hard:
-                            Health -= 100f;
-                            break;
-                    }
-                    Destroy(enemyGameObject);
-                }
-            }
-        }
-
-        private void CheckHealth()
-        {
-            if (Health <= 0f)
-            {
-                Alive = false;
-            }
         }
     }
 }

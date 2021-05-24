@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Game
 {
+    /// <summary>
+    /// Tracks the player's score
+    /// </summary>
     public class PointsTracker : MonoBehaviour
     {
         public ScorePoint playerScore;

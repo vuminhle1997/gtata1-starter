@@ -21,8 +21,7 @@ namespace Enemy
             moveForward = true;
             _rb = gameObject.GetComponent<Rigidbody2D>();
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
             if (_currentGameState == GameState.Play)

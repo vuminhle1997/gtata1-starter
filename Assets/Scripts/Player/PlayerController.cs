@@ -46,6 +46,9 @@ namespace Player
             BindActor(actor);
         }
 
+        /// <summary>
+        /// Initialize player stats!
+        /// </summary>
         void Awake()
         {
             IsRunning = false;
@@ -84,17 +87,7 @@ namespace Player
                     break;
             }
         }
-
-        public float GetDirX()
-        {
-            return dirX;
-        }
-
-        public GameState GetCurrentGameStateFromPlayerParent()
-        {
-            return currentGameState;
-        }
-
+        
         private IActorCommand GetCommand()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -136,6 +129,23 @@ namespace Player
             Destroy(gameObject);
         }
         
+        public float GetDirX()
+        {
+            return dirX;
+        }
+
+        public GameState GetCurrentGameStateFromPlayerParent()
+        {
+            return currentGameState;
+        }
+        
+        /// <summary>
+        /// Returns an Collider2D, if there is an obstacle by the estimated faced direction.
+        /// Otherwise, return null.
+        /// </summary>
+        /// <param name="dir">The facing direction (left or right)</param>
+        /// <param name="vecPos">The current player's vector position</param>
+        /// <returns></returns>
         private Collider2D GetsCollisionWithObstacle(float dir, Vector2 vecPos)
         {
             Vector2 lookPos = dir < 0 ? new Vector2(vecPos.x - 15, vecPos.y) : new Vector2(vecPos.x + 15, vecPos.y);

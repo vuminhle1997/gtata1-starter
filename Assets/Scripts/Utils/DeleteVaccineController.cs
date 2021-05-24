@@ -34,6 +34,10 @@ namespace Utils
             }
         }
 
+        /// <summary>
+        /// If vaccine touches obstacle, destroy it!
+        /// </summary>
+        /// <param name="other"></param>
         private void OnCollisionEnter2D(Collision2D other)
         {
             foreach (var go in other.contacts)

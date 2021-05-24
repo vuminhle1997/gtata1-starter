@@ -26,5 +26,10 @@ namespace Actor
             get;
             set;
         }
+
+        public void TakeDamage(float damage)
+        {
+            Health += damage;
+        }
     }
 }
