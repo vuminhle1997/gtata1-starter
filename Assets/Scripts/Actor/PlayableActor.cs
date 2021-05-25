@@ -27,7 +27,7 @@ namespace Actor
             set;
         }
 
-        public void TakeDamage(float damage)
+        protected void TakeDamage(float damage)
         {
             Health += damage;
         }
