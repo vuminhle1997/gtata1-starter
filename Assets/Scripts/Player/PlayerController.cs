@@ -76,14 +76,16 @@ namespace Player
             // if the other case is true, then observe if the player is holding the shift key down (if the player is running)
             // when the player runs, use the running speed parameter
             // otherwise, use the normal movement speed instead
-            dirX = !isNearObstacle ? !IsRunning ? (dirXAxis * MoveSpeed * Time.deltaTime) : (dirXAxis * RunningSpeed * Time.deltaTime) : 0;
-        
-            // triggers walking or idle transition
-            playerStateMachine.Trigger(dirX == 0 ? PlayerTransition.IsIdle : PlayerTransition.IsWalking, null);
+            if (rb.IsAwake())
+            {
+                dirX = !isNearObstacle ? !IsRunning ? (dirXAxis * MoveSpeed * Time.deltaTime) : (dirXAxis * RunningSpeed * Time.deltaTime) : 0;
+                // triggers walking or idle transition
+                playerStateMachine.Trigger(dirX == 0 ? PlayerTransition.IsIdle : PlayerTransition.IsWalking, null);
 
-            // get input and execute commands (jump, fire or run)
-            var command = GetCommand();
-            command?.Execute();
+                // get input and execute commands (jump, fire or run)
+                var command = GetCommand();
+                command?.Execute();
+            }
         }
 
         /// <summary>
@@ -94,6 +96,7 @@ namespace Player
         void FixedUpdate()
         {
             currentGameState = gameStateMachine.GetCurrentGameState();
+            Debug.Log(currentGameState);
             switch (currentGameState)
             {
                 case GameState.Play:

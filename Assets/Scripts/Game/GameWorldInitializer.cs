@@ -33,17 +33,14 @@ public class GameWorldInitializer : MonoBehaviour
         SpawnEnemiesBasedOnDifficulty(_settings._difficulty);
     }
 
-    private void Start()
+    private void Update()
     {
+        ClearNullEnemies();
+        
         var currentGameStateFrame = _gameStateMachine.GetCurrentGameState();
         if (currentGameStateFrame == _currentGameState) return;
         _currentGameState = currentGameStateFrame;
         InjectCurrentGameStateIntoEnemies();
-    }
-
-    private void Update()
-    {
-        ClearNullEnemies();
     }
 
     #region RandomEnemySpawner
