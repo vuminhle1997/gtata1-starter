@@ -2,6 +2,7 @@ using Actor;
 using Enemy;
 using StateMachines;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace Player
@@ -11,7 +12,7 @@ namespace Player
         private Rigidbody2D rb;
         private float jumpForce = 125f;
         [SerializeField] private VaccineController vaccineController;
-        [SerializeField] private PlayerStateMachine stateMachine;
+        [FormerlySerializedAs("stateMachine")] [SerializeField] private PlayerStateMachine playerStateMachine;
         [SerializeField] private PlayerController playerController;
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace Player
                 if (contactPoint2D.collider.gameObject.layer == Layers.Ground || contactPoint2D.collider.gameObject.layer 
                     == Layers.Obstacle)
                 {
-                    stateMachine.Trigger(PlayerTransition.IsFallingDown);
+                    playerStateMachine.Trigger(PlayerTransition.IsFallingDown);
                     continue;
                 }
                 // if the contact point is an enemy, take damage and destroy enemy

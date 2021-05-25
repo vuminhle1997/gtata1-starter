@@ -118,7 +118,8 @@ namespace Player
         /// </returns>
         private IActorCommand GetCommand()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            var playerState = playerStateMachine.GetCurrentState();
+            if (Input.GetKeyDown(KeyCode.Space) && playerState != PlayerState.Jump)
             {
                 playerStateMachine.Trigger(PlayerTransition.IsJumping);
                 return jump;
