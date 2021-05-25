@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum Difficulty
 {
@@ -32,11 +34,19 @@ namespace Persistence
     public class Settings : MonoBehaviour
     {
         public SettingsOptions settingsOptions;
-        public const string Path = "./json/settings.json";
+        public const string PATH = "./json/settings.json";
+        public const string BIN_PATH = "./bin/settings";
 
         private void Awake()
         {
-            var _settingsOptions = LoadSettings(Path);
+            SettingsOptions _settingsOptions;
+            
+            #if UNITY_EDITOR
+                _settingsOptions = LoadSettings(PATH);  
+            #else
+                _settingsOptions = LoadSettings(BIN_PATH);
+            #endif
+
             if (_settingsOptions != null)
             {
                 settingsOptions = _settingsOptions;
@@ -48,22 +58,65 @@ namespace Persistence
             }
         }
 
+        
+
+        #region Serializer/Save
+
         public static void SaveSettings(SettingsOptions options, string subPath)
         {
+#if UNITY_EDITOR
+            SaveSettingsAsJson(options, subPath);
+#else
+            SaveSettingsAsBinary(options, subPath);
+#endif
+        }
+
+        private static void SaveSettingsAsJson(SettingsOptions options, string subPath)
+        {
             var jsonString = JsonUtility.ToJson(options);
-            var fullPath = System.IO.Path.Combine(Application.persistentDataPath, subPath);
+            var fullPath = Path.Combine(Application.persistentDataPath, subPath);
             using var streamWriter = File.CreateText(fullPath);
             streamWriter.Write(jsonString);
-                
-            Debug.Log("Saved settings successful");
         }
+
+        private static void SaveSettingsAsBinary(SettingsOptions options, string subPath)
+        {
+            var binaryFormatter = new BinaryFormatter();
+            var fullPath = Path.Combine(Application.persistentDataPath, subPath);
+            using var streamWriter = File.Open(fullPath, FileMode.OpenOrCreate);
+            binaryFormatter.Serialize(streamWriter, options);
+        }
+
+        #endregion
+
+
+        #region Deserializer/Loader
 
         public static SettingsOptions LoadSettings(string subPath)
         {
-            var fullPath = System.IO.Path.Combine(Application.persistentDataPath, subPath);
+#if UNITY_EDITOR
+            return LoadSettingsFromJson(subPath);
+#else
+            return LoadSettingsFromBinary(subPath);
+#endif
+        }
+        
+        private static SettingsOptions LoadSettingsFromJson(string subPath)
+        {
+            var fullPath = Path.Combine(Application.persistentDataPath, subPath);
             using var streamReader = File.OpenText(fullPath);
             var jsonString = streamReader.ReadToEnd();
             return JsonUtility.FromJson<SettingsOptions>(jsonString);
         }
+
+        private static SettingsOptions LoadSettingsFromBinary(string subPath)
+        {
+            var binaryFormatter = new BinaryFormatter();
+            var fullPath = Path.Combine(Application.persistentDataPath, subPath);
+            using var streamReader = File.Open(fullPath, FileMode.Open);
+            return (SettingsOptions) binaryFormatter.Deserialize(streamReader);
+        }
+
+        #endregion
     }
 }

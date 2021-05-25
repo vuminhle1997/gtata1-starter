@@ -9,21 +9,7 @@ namespace StateMachines
     public class PlayerStateMachine : MonoBehaviour
     {
         [SerializeField] private PlayerState currentState;
-
         [SerializeField] private StateHandler jumpingHandler, walkingHandler, idleHandler;
-    
-        /// <summary>
-        /// Delays the next transition state by x-seconds
-        /// </summary>
-        /// <param name="state"></param>
-        /// <param name="payload"></param>
-        /// <param name="seconds"></param>
-        /// <returns></returns>
-        private IEnumerator DelayTransitionState(PlayerState state, Dictionary<string, object> payload, float seconds = 1f)
-        {
-            yield return new WaitForSeconds(seconds);
-            TransitionTo(state, payload);
-        }
 
         /// <summary>
         /// triggers a transition.
@@ -99,6 +85,8 @@ namespace StateMachines
             currentState = newState;
         }
 
+        #region Getters
+
         /// <summary>
         /// returns state's handler
         /// </summary>
@@ -134,5 +122,7 @@ namespace StateMachines
         {
             return currentState;
         }
+
+        #endregion
     }
 }

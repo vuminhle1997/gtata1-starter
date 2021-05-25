@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace StateMachines
 {
+    /// <summary>
+    /// The game state machine.
+    /// </summary>
     public class GameStateMachine: MonoBehaviour
     {
         [SerializeField] private GameState currentState;
@@ -15,13 +18,16 @@ namespace StateMachines
         [SerializeField] private StateHandler winningHandler;
 
         /// <summary>
-        /// Go back to main menu!
+        /// Default game state. PLAY
         /// </summary>
-        public void Reset()
+        private void Awake()
         {
-            currentState = GameState.Menu;
+            currentState = GameState.Play;
         }
 
+        /// <summary>
+        /// Checks the game's state. Toggle's in-game menu.
+        /// </summary>
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape) && currentState == GameState.Play)
@@ -35,7 +41,7 @@ namespace StateMachines
         }
 
         /// <summary>
-        /// 
+        /// Makes transition to another state.
         /// </summary>
         /// <param name="triggerType"></param>
         /// <param name="payload"></param>
@@ -89,6 +95,11 @@ namespace StateMachines
             }
         }
 
+        /// <summary>
+        /// Internal method for Trigger
+        /// </summary>
+        /// <param name="newState"></param>
+        /// <param name="payload"></param>
         private void TransitionTo(GameState newState, Dictionary<string, object> payload)
         {
             if (newState == currentState)
@@ -105,6 +116,14 @@ namespace StateMachines
             currentState = newState;
         }
 
+        #region Getters
+
+        /// <summary>
+        /// Returns a specific state handler by the given parameter.
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         private StateHandler GetHandler(GameState state)
         {
             switch (state)
@@ -124,9 +143,15 @@ namespace StateMachines
             }
         }
 
+        /// <summary>
+        /// Returns the current game state.
+        /// </summary>
+        /// <returns></returns>
         public GameState GetCurrentGameState()
         {
             return currentState;
         }
+
+        #endregion
     }
 }

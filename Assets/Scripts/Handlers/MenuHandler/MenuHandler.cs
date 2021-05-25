@@ -1,11 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using StateMachines;
 using UnityEngine;
 
-namespace Handlers
+namespace Handlers.MenuHandler
 {
+    /// <summary>
+    /// Toggles the main menu screen.
+    /// </summary>
     public class MenuHandler : StateHandler
     {
         // [SerializeField] private MenuStateMachine menuStateMachine;

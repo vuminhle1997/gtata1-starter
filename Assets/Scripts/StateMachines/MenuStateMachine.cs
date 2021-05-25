@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace StateMachines
 {
+    /// <summary>
+    /// The main menu state machine.
+    /// </summary>
     public class MenuStateMachine : MonoBehaviour
     {
         [SerializeField] private MenuState currentState;

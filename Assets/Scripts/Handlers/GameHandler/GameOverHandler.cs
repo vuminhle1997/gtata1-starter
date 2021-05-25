@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Handlers.GameHandler
 {
+    /// <summary>
+    /// Toggles the game over screen with score and input field.
+    /// </summary>
     public class GameOverHandler: StateHandler
     {
         [SerializeField] private GameObject gameOverScreenGameObject;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1478.8682, g: 1831.9521, b: 2425.4668, a: 1}
+  m_IndirectSpecularColor: {r: 1250.0823, g: 1597.8466, b: 2177.6426, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -493,7 +493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92a7715a98849b4da1b54619d1e212a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 2108180006}
   idleSpriteGameObject: {fileID: 838850701}
 --- !u!114 &84915910
 MonoBehaviour:
@@ -521,8 +520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4db8613e7e40f38f26ce305b77b40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateMachine: {fileID: 84915908}
-  playerController: {fileID: 2108180006}
   jumpSpriteGameObject: {fileID: 1147249405}
 --- !u!4 &84915912
 Transform:

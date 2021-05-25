@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Handlers.PlayerHandler
 {
+    /// <summary>
+    /// Toggles the player's walking animation sprite.
+    /// </summary>
     public class WalkingHandler : StateHandler
     {
         [SerializeField] private PlayerController playerController;
@@ -27,6 +30,7 @@ namespace Handlers.PlayerHandler
         {
             var dirX = playerController.GetDirX();
 
+            // switches the sprite's the direction based on the faced vector direction
             if (dirX < 0f)
             {
                 playerController.transform.eulerAngles = new Vector3(0, 180, 0);

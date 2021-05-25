@@ -1,12 +1,9 @@
 ﻿using System;
 using Game;
-using Score;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-namespace UI
+namespace UI.Misc
 {
     public class UIInputFieldController: MonoBehaviour
     {
@@ -22,7 +19,6 @@ namespace UI
         private void Update()
         {
             name = inputField.text;
-            pointsTracker.playerScore.Name = name;
         }
 
         public string GetName()

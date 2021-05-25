@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Handlers.GameHandler
 {
+    /// <summary>
+    /// Toggles the in-game menu screen.
+    /// </summary>
     public class InGameMenuHandler: StateHandler
     {
         [SerializeField] private GameObject inGameMenuGameObject;

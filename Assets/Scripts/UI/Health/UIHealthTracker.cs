@@ -15,6 +15,9 @@ namespace UI.Health
             textUI = gameObject.GetComponent<TextMeshProUGUI>();
         }
         
+        /// <summary>
+        /// Attaches the player's HP to the UI text.
+        /// </summary>
         private void Update()
         {
             var health = (int) playerController.Actor.Health;

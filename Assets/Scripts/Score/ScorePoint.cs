@@ -11,16 +11,9 @@ namespace Score
         public ScorePoint()
         {
             CurrentScore = 0;
-            Name = "";
         }
         
         public int CurrentScore
-        {
-            get;
-            set;
-        }
-
-        public string Name
         {
             get;
             set;

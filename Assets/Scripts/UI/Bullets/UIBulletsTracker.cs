@@ -6,6 +6,9 @@ using UnityEngine.Serialization;
 
 namespace UI.Bullets
 {
+    /// <summary>
+    /// Tracks the player's current bullet
+    /// </summary>
     public class UIBulletsTracker : MonoBehaviour
     {
         [SerializeField] private PlayerController playerController;
@@ -16,6 +19,9 @@ namespace UI.Bullets
             _bulletsUI = gameObject.GetComponent<TextMeshProUGUI>();
         }
 
+        /// <summary>
+        /// Attaches the bullet count to the UI text.
+        /// </summary>
         private void Update()
         {
             _bulletsUI.text = "Bullets: " + $"{playerController.Actor.Bullets}";

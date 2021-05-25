@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 namespace Score
@@ -9,12 +10,9 @@ namespace Score
     public class ScorePointSerializerController: MonoBehaviour
     {
         public HighScoreLadder highScoreLadder;
-            
-#if UNITY_EDITOR
-        public const string Path = "./json/highscore.json";
-#elif UNITY_STANDALONE
-        public const string Path = "./json/highscore.json";
-#endif
+        public const string PATH = "./json/highscore.json";
+        public const string BIN_PATH = "./bin/highscore";
+
         
         /// <summary>
         /// Loads the ladder abd attach this to highScoreLadder, if one exists.
@@ -22,7 +20,13 @@ namespace Score
         /// </summary>
         private void OnEnable()
         {
-            var _highScoreLadder = LoadHighScoreLadder(Path);
+            HighScoreLadder _highScoreLadder;
+            #if UNITY_EDITOR
+                _highScoreLadder = LoadHighScoreLadder(PATH);
+            #else
+                _highScoreLadder = LoadHighScoreLadder(BIN_PATH);
+            #endif
+            
             if (_highScoreLadder != null)
             {
                 highScoreLadder = _highScoreLadder;
@@ -41,20 +45,41 @@ namespace Score
         {
             highScoreLadder.AddHighScore(player);
         }
-        
+
+        #region Serializer/ Saver
+
         /// <summary>
         /// Saves the current loaded ladder.
         /// </summary>
         /// <param name="subPath"></param>
-        public void SaveSettings(string subPath)
+        public void SaveHighScore(string subPath)
+        {
+#if UNITY_EDITOR
+            SaveHighScoreAsJson(subPath);
+#else
+            SaveHighScoreAsBinary(subPath);
+#endif
+        }
+
+        private void SaveHighScoreAsJson(string subPath)
         {
             var jsonString = JsonUtility.ToJson(highScoreLadder);
-            var fullPath = System.IO.Path.Combine(Application.persistentDataPath, subPath);
+            var fullPath = Path.Combine(Application.persistentDataPath, subPath);
             using var streamWriter = File.CreateText(fullPath);
             streamWriter.Write(jsonString);
-                
-            Debug.Log("Saved settings successful"); 
         }
+
+        private void SaveHighScoreAsBinary(string subPath)
+        {
+            var binaryFormatter = new BinaryFormatter();
+            var fullPath = Path.Combine(Application.persistentDataPath, subPath);
+            using var streamWriter = File.Open(fullPath, FileMode.OpenOrCreate);
+            binaryFormatter.Serialize(streamWriter, highScoreLadder);
+        }
+
+        #endregion
+
+        #region Deserializer/ Loader
 
         /// <summary>
         /// Loads the ladder in the storage.
@@ -63,10 +88,29 @@ namespace Score
         /// <returns></returns>
         private static HighScoreLadder LoadHighScoreLadder(string path)
         {
-            var fullPath = System.IO.Path.Combine(Application.persistentDataPath, path);
+#if UNITY_EDITOR
+            return LoadHighScoreLadderFromJson(path);
+#else
+            return LoadHighScoreLadderFromBinary(path);
+#endif
+        }
+
+        private static HighScoreLadder LoadHighScoreLadderFromJson(string path)
+        {
+            var fullPath = Path.Combine(Application.persistentDataPath, path);
             using var streamReader = File.OpenText(fullPath);
             var jsonString = streamReader.ReadToEnd();
             return JsonUtility.FromJson<HighScoreLadder>(jsonString);
         }
+
+        private static HighScoreLadder LoadHighScoreLadderFromBinary(string path)
+        {
+            var binaryFormatter = new BinaryFormatter();
+            var fullPath = Path.Combine(Application.persistentDataPath, path);
+            using var streamReader = File.Open(fullPath, FileMode.Open);
+            return (HighScoreLadder) binaryFormatter.Deserialize(streamReader);
+        }
+
+        #endregion
     }
 }

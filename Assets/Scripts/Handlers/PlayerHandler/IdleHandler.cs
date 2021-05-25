@@ -5,9 +5,12 @@ using UnityEngine;
 
 namespace Handlers.PlayerHandler
 {
+    /// <summary>
+    /// Toggles the player's idle animation sprites.
+    /// </summary>
     public class IdleHandler : StateHandler
     {
-        [SerializeField] private PlayerController playerController;
+        // [SerializeField] private PlayerController playerController;
         [SerializeField] private GameObject idleSpriteGameObject;
         public override void OnExit()
         {

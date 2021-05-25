@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Persistence
 {
+    /// <summary>
+    /// Creates two directories (bin and json), if both do not exists.
+    /// </summary>
     public class DirectoryInitializer : MonoBehaviour
     {
         private void Start()

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Handlers.GameHandler
 {
+    /// <summary>
+    /// Toggles the player's UI.
+    /// </summary>
     public class PlayHandler: StateHandler
     {
         [SerializeField] private GameObject mainScreenOverlay;

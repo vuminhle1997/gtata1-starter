@@ -6,16 +6,16 @@ namespace Enemy
 {
     public class CovidEnemyMovementAI : MonoBehaviour
     {
-        private CovidEnemyScript _covidEnemyScript;
         private float _dirX;
         private Vector2 _originPos;
         private bool moveForward;
         private GameState _currentGameState;
         private Rigidbody2D _rb;
+        private float moveSpeed;
 
         private void Awake()
         {
-            _covidEnemyScript = gameObject.GetComponent<CovidEnemyScript>();
+            moveSpeed = 100f;
             _dirX = transform.position.x;
             _originPos = transform.position;
             moveForward = true;
@@ -47,17 +47,20 @@ namespace Enemy
         {
             if (moveForward)
             {
-                _dirX = 0.125f * _covidEnemyScript.moveSpeed * Time.deltaTime;
+                _dirX = 0.125f * moveSpeed * Time.deltaTime;
             }
             else
             {
-                _dirX = -0.125f * _covidEnemyScript.moveSpeed * Time.deltaTime;
+                _dirX = -0.125f * moveSpeed * Time.deltaTime;
             }
 
             Vector2 newPos = new Vector2(transform.position.x + _dirX, transform.position.y);
             transform.position = newPos;
         }
 
+        /// <summary>
+        /// Enemy walks back and forth.
+        /// </summary>
         private void MovementCycle()
         {
             Vector2 newPos = transform.position;

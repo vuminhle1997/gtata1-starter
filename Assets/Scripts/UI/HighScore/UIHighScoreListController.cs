@@ -1,11 +1,8 @@
-using System;
-using Handlers;
-using Score;
+using Handlers.MenuHandler;
 using TMPro;
 using UnityEngine;
-using Utils;
 
-namespace UI
+namespace UI.HighScore
 {
     public class UIHighScoreListController : MonoBehaviour
     {
@@ -26,7 +23,7 @@ namespace UI
                 var highScore = highScores[i];
                 var newGameObject = Instantiate(highScoreLabel);
                 newGameObject.GetComponent<TextMeshProUGUI>().text =
-                    $"{index}:" + $"{highScore.name}," + $"{highScore.score} PTS";
+                    $"{index}:" + $"{highScore.name}, " + $"{highScore.score} PTS";
 
                 newGameObject.transform.parent = gameObject.transform;
             }

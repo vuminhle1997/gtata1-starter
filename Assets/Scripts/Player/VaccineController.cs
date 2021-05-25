@@ -18,7 +18,7 @@ namespace Player
         private void Update()
         {
             // source: https://answers.unity.com/questions/603757/2d-mouse-aiming.html
-            var currentGameState = playerController.GetCurrentGameStateFromPlayerParent();
+            var currentGameState = playerController.GetCurrentGameState();
             if (currentGameState != GameState.Play) return;
             _lookDirection = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
 

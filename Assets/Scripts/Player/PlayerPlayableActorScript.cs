@@ -1,7 +1,6 @@
 using Actor;
 using Enemy;
 using StateMachines;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Utils;
 
@@ -78,7 +77,9 @@ namespace Player
                 Alive = false;
             }
         }
-        
+
+        #region ActorCommands
+
         public override void Jump()
         {
             rb.velocity = Vector2.up * jumpForce;
@@ -97,5 +98,7 @@ namespace Player
         {
             playerController.IsRunning = true;
         }
+
+        #endregion
     }
 }

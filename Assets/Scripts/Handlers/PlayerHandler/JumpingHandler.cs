@@ -6,10 +6,13 @@ using UnityEngine;
 
 namespace Handlers.PlayerHandler
 {
+    /// <summary>
+    /// Toggles the player's jumping animation sprite.
+    /// </summary>
     public class JumpingHandler : StateHandler
     {
-        [SerializeField] private PlayerStateMachine playerStateMachine;
-        [SerializeField] private PlayerController playerController;
+        // [SerializeField] private PlayerStateMachine playerStateMachine;
+        // [SerializeField] private PlayerController playerController;
         [SerializeField] private GameObject jumpSpriteGameObject;
         public override void OnEnter(Dictionary<string, object> payload)
         {

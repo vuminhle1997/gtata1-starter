@@ -8,9 +8,14 @@ namespace Player
     {
         [SerializeField] private PlayerStateMachine playerStateMachine;
         [SerializeField] private GameStateMachine gameStateMachine;
+        // The player's unique PlayableActor script
         [SerializeField] private PlayableActor actor;
-
+        public LayerMask obstacleLayer;
+        
         private GameState currentGameState;
+
+        #region Stats
+
         private float MoveSpeed
         {
             get;
@@ -29,7 +34,6 @@ namespace Player
             set;
         }
         private float dirX, dirXAxis;
-
         private Rigidbody2D rb;
         private IActorCommand jump, fire, run;
 
@@ -39,8 +43,11 @@ namespace Player
             set => BindActor(value);
         }
 
-        public LayerMask obstacleLayer;
+        #endregion
 
+        /// <summary>
+        /// Same as Awake (if script/gameobject starts and is enabled)
+        /// </summary>
         void OnEnable()
         {
             BindActor(actor);
@@ -64,16 +71,26 @@ namespace Player
             
             dirXAxis = Input.GetAxisRaw("Horizontal");
             var isNearObstacle = GetsCollisionWithObstacle(dirXAxis, transform.position);
-
+            // Nested ternary operator
+            // if the player is near an obstacle, then don't move 
+            // if the other case is true, then observe if the player is holding the shift key down (if the player is running)
+            // when the player runs, use the running speed parameter
+            // otherwise, use the normal movement speed instead
             dirX = !isNearObstacle ? !IsRunning ? (dirXAxis * MoveSpeed * Time.deltaTime) : (dirXAxis * RunningSpeed * Time.deltaTime) : 0;
         
             // triggers walking or idle transition
             playerStateMachine.Trigger(dirX == 0 ? PlayerTransition.IsIdle : PlayerTransition.IsWalking, null);
 
+            // get input and execute commands (jump, fire or run)
             var command = GetCommand();
             command?.Execute();
         }
 
+        /// <summary>
+        /// Checks game's current state.
+        /// Freezes the RigidBody of player, if game is paused.
+        /// Otherwise, resume the RigidBody's physics.
+        /// </summary>
         void FixedUpdate()
         {
             currentGameState = gameStateMachine.GetCurrentGameState();
@@ -87,7 +104,15 @@ namespace Player
                     break;
             }
         }
-        
+
+        #region I_PlayableActor
+
+        /// <summary>
+        /// Returns a specific command by the user's input.
+        /// </summary>
+        /// <returns>
+        /// Either Jump, Fire or Run
+        /// </returns>
         private IActorCommand GetCommand()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -114,6 +139,11 @@ namespace Player
             return null;
         }
 
+        /// <summary>
+        /// Binds the serialized actor script (an unique script for the player) to this object.
+        /// Initialize the three commands to this object. 
+        /// </summary>
+        /// <param name="actor"></param>
         private void BindActor(IActor actor)
         {
             this.actor = actor as PlayableActor;
@@ -122,19 +152,24 @@ namespace Player
             run = new RunCommand(actor);
         }
 
-        private void CheckAliveCondition()
-        {
-            if (actor.Alive) return;
-            gameStateMachine.Trigger(GameTransition.ShowGameOver);
-            Destroy(gameObject);
-        }
-        
+        #endregion
+
+        #region Getters
+
+        /// <summary>
+        /// Returns the player's current x-Position.
+        /// </summary>
+        /// <returns></returns>
         public float GetDirX()
         {
             return dirX;
         }
 
-        public GameState GetCurrentGameStateFromPlayerParent()
+        /// <summary>
+        /// Returns the game's current state.
+        /// </summary>
+        /// <returns></returns>
+        public GameState GetCurrentGameState()
         {
             return currentGameState;
         }
@@ -152,5 +187,22 @@ namespace Player
 
             return Physics2D.OverlapCircle(lookPos, 7.5f, obstacleLayer);
         }
+
+        #endregion
+
+        #region Misc
+
+        /// <summary>
+        /// Checks the player's alive condition.
+        /// If the player is dead, destroy this object and switch to game over screen.
+        /// </summary>
+        private void CheckAliveCondition()
+        {
+            if (actor.Alive) return;
+            gameStateMachine.Trigger(GameTransition.ShowGameOver);
+            Destroy(gameObject);
+        }
+
+        #endregion
     }
 }

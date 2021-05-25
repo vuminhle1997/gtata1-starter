@@ -13,9 +13,11 @@ namespace Enemy
         Hard
     }
     
+    /// <summary>
+    /// The enemy script
+    /// </summary>
     public class CovidEnemyScript : MonoBehaviour
     {
-        public float moveSpeed;
         public float health;
         public EnemyDifficulty enemyDifficulty;
         private PointsTracker _pointsTracker;
@@ -26,7 +28,69 @@ namespace Enemy
                 AddPointsBasedOnDifficulty();
             }
         }
+        
+        #region Setters
 
+        /// <summary>
+        /// Sets the enemy stats based on the difficulty
+        /// </summary>
+        /// <param name="difficulty"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void InitCovidStats(Difficulty difficulty)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.Easy:
+                    health = 1;
+                    enemyDifficulty = EnemyDifficulty.Easy;
+                    break;
+                case Difficulty.Medium:
+                    health = 2;
+                    enemyDifficulty = EnemyDifficulty.Medium;
+                    break;
+                case Difficulty.Hard:
+                    health = 3;
+                    enemyDifficulty = EnemyDifficulty.Hard;
+                    break;
+                default:
+                    throw new NotImplementedException("Not implemented");
+            }
+        }
+        
+        /// <summary>
+        /// Attach the points tracker to this enemy.
+        /// </summary>
+        /// <param name="pointsTracker"></param>
+        public void SetPointsTracker(PointsTracker pointsTracker)
+        {
+            _pointsTracker = pointsTracker;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// If the enemy gets hit by a vaccine, decremented the HP and eventually kill this
+        /// enemy. Also, destroy the vaccine projectile from the game.
+        /// Increment the player's score
+        /// </summary>
+        /// <param name="other"></param>
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            var vaccineCollider = other.contacts[0].collider;
+            if (vaccineCollider != null && vaccineCollider.name.ToLower().Contains("vaccine"))
+            {
+                var vaccineGameObject = vaccineCollider.gameObject;
+                Destroy(vaccineGameObject);
+                health -= 1;
+                
+                _pointsTracker.playerScore.CurrentScore += 100;
+            }
+        }
+
+        /// <summary>
+        /// Increments the player's score based on the difficulty.
+        /// Kills enemy and removes it from the game.
+        /// </summary>
         private void AddPointsBasedOnDifficulty()
         {
             switch (enemyDifficulty)
@@ -43,48 +107,6 @@ namespace Enemy
             }
             
             Destroy(gameObject);
-        }
-
-        public void InitCovidStats(Difficulty difficulty)
-        {
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    moveSpeed = 100f;
-                    health = 1;
-                    enemyDifficulty = EnemyDifficulty.Easy;
-                    break;
-                case Difficulty.Medium:
-                    moveSpeed = 100f;
-                    health = 2;
-                    enemyDifficulty = EnemyDifficulty.Medium;
-                    break;
-                case Difficulty.Hard:
-                    moveSpeed = 100f;
-                    health = 3;
-                    enemyDifficulty = EnemyDifficulty.Hard;
-                    break;
-                default:
-                    throw new NotImplementedException("Not implemented");
-            }
-        }
-
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            var vaccineCollider = other.contacts[0].collider;
-            if (vaccineCollider != null && vaccineCollider.name.ToLower().Contains("vaccine"))
-            {
-                var vaccineGameObject = vaccineCollider.gameObject;
-                Destroy(vaccineGameObject);
-                health -= 1;
-                
-                _pointsTracker.playerScore.CurrentScore += 100;
-            }
-        }
-
-        public void SetPointsTracker(PointsTracker pointsTracker)
-        {
-            _pointsTracker = pointsTracker;
         }
     }
 }

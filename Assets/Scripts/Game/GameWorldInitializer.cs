@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Enemy;
 using Game;
@@ -22,14 +20,20 @@ public class GameWorldInitializer : MonoBehaviour
     public List<GameObject> placedEnemies;
     private void Awake()
     {
-        var _settings = Settings.LoadSettings(Settings.Path);
+        SettingsOptions _settings;
+        #if UNITY_EDITOR
+            _settings = Settings.LoadSettings(Settings.PATH);
+        #else
+            _settings = Settings.LoadSettings(Settings.BIN_PATH);
+        #endif
+        
         settings = _settings;
         _currentGameState = _gameStateMachine.GetCurrentGameState();
         
         SpawnEnemiesBasedOnDifficulty(_settings._difficulty);
     }
 
-    private void Update()
+    private void Start()
     {
         var currentGameStateFrame = _gameStateMachine.GetCurrentGameState();
         if (currentGameStateFrame == _currentGameState) return;
@@ -37,11 +41,17 @@ public class GameWorldInitializer : MonoBehaviour
         InjectCurrentGameStateIntoEnemies();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         ClearNullEnemies();
     }
 
+    #region RandomEnemySpawner
+
+    /// <summary>
+    /// Spawns an amount of enemies based on the difficulty.
+    /// </summary>
+    /// <param name="difficulty"></param>
     private void SpawnEnemiesBasedOnDifficulty(Difficulty difficulty)
     {
         switch (difficulty)
@@ -61,6 +71,12 @@ public class GameWorldInitializer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns an enemy and inject the spawned enemy in the injected area.
+    /// </summary>
+    /// <param name="count"></param>
+    /// <param name="difficulty"></param>
+    /// <param name="isHardestDifficulty"></param>
     private void SpawnEnemies(int count, Difficulty difficulty, bool isHardestDifficulty = false)
     {
         Random random = new Random();
@@ -108,6 +124,8 @@ public class GameWorldInitializer : MonoBehaviour
             enemy.GetComponent<CovidEnemyMovementAI>().SetCurrentGameState(_currentGameState);
         }
     }
+
+    #endregion
 
     private void ClearNullEnemies()
     {

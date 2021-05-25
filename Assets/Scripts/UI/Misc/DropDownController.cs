@@ -4,7 +4,7 @@ using Persistence;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.Misc
 {
     /// <summary>
     /// This class is responsible for the difficulty dropdown

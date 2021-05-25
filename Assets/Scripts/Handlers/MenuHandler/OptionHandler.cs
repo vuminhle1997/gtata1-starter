@@ -1,12 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using Persistence;
 using StateMachines;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Handlers
+namespace Handlers.MenuHandler
 {
+    /// <summary>
+    /// Toggles the option menu screen.
+    /// </summary>
     public class OptionHandler : StateHandler
     {
         [FormerlySerializedAs("_settings")] [SerializeField] private Settings settings;
@@ -22,8 +24,12 @@ namespace Handlers
             Debug.Log("Exit State: " + $"{MenuState.Option}");
             optionMenuGameObject.SetActive(false);
             var settingsOptions = settings.settingsOptions;
-
-            Settings.SaveSettings(settingsOptions, Settings.Path);
+            
+            #if UNITY_EDITOR
+                Settings.SaveSettings(settingsOptions, Settings.PATH);
+            #else
+                Settings.SaveSettings(settingsOptions, Settings.BIN_PATH);
+            #endif
         }
     }
 }
