@@ -29,6 +29,12 @@ namespace Persistence
             _soundLevel = 100f;
         }
     }
+    
+    /// <summary>
+    /// Based on the environments, store/load the setting options via binary or json.
+    /// If DEV, then Json.
+    /// Otherwise, binary. 
+    /// </summary>
     public class Settings : MonoBehaviour
     {
         public SettingsOptions settingsOptions;
@@ -56,7 +62,7 @@ namespace Persistence
             }
         }
 
-        #region Serializer/Save
+        #region Serializer/Saver
 
         public static void SaveSettings(SettingsOptions options, string subPath)
         {

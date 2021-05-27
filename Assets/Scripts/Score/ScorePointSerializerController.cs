@@ -5,7 +5,10 @@ using UnityEngine;
 namespace Score
 {
     /// <summary>
-    /// Class for storing the player's score into a ladder.
+    /// Based on the environments, store/load the setting options via binary or json.
+    /// If DEV, then Json.
+    /// Otherwise, binary.
+    /// Responsible for Se- and Deserialization of Ladder Board
     /// </summary>
     public class ScorePointSerializerController: MonoBehaviour
     {
@@ -46,7 +49,7 @@ namespace Score
             highScoreLadder.AddHighScore(player);
         }
 
-        #region Serializer/ Saver
+        #region Serializer/Saver
 
         /// <summary>
         /// Saves the current loaded ladder.
@@ -79,7 +82,7 @@ namespace Score
 
         #endregion
 
-        #region Deserializer/ Loader
+        #region Deserializer/Loader
 
         /// <summary>
         /// Loads the ladder in the storage.
