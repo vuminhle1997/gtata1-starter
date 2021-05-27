@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Handlers;
+using Persistence;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace StateMachines
 {
@@ -12,12 +14,27 @@ namespace StateMachines
     {
         [SerializeField] private MenuState currentState;
         [SerializeField] private StateHandler menuHandler, optionHandler, highScoreHandler;
+        private AudioSource musicSource;
 
         private void Awake()
         {
             currentState = MenuState.Menu;
-        }
+            musicSource = GetComponent<AudioSource>();
+            SettingsOptions settingsOptions;
+            
+            #if UNITY_EDITOR
+                settingsOptions = Settings.LoadSettings(Settings.PATH);
+            #else
+                settingsOptions = Settings.LoadSettings(Settings.BIN_PATH);
+            #endif
 
+            if (settingsOptions._enableMusic)
+            {
+                musicSource.Play();
+                musicSource.volume = settingsOptions._musicLevel / 100;
+            }
+        }
+        
         public bool Trigger(MenuStateTransition triggerType, Dictionary<string, object> payload = null)
         {
             switch (triggerType)
@@ -80,6 +97,11 @@ namespace StateMachines
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+        }
+
+        public AudioSource GetMusicSource()
+        {
+            return musicSource;
         }
     }
 }

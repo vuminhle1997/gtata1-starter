@@ -1,19 +1,24 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using StateMachines;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
-namespace UI
+namespace UI.Menu
 {
     public class MenuButtonsController : MonoBehaviour
     {
         [SerializeField] private MenuStateMachine menuStateMachine;
+        private AudioSource audioSource;
+
+        private void Awake()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
 
         public void OnClick(int i)
         {
+            audioSource.Play();
             switch (i)
             {
                 case 1:
@@ -40,6 +45,11 @@ namespace UI
                 default:
                     throw new NotImplementedException("Not implemented");
             }
+        }
+
+        public AudioSource GetAudioSource()
+        {
+            return audioSource;
         }
     }
 }
