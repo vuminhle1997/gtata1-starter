@@ -1,5 +1,8 @@
 ﻿namespace Actor
 {
+    /// <summary>
+    /// Run command
+    /// </summary>
     public class RunCommand: ActorCommand
     {
         public RunCommand(IActor actor) : base(actor)

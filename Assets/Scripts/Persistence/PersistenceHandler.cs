@@ -10,6 +10,7 @@ namespace Persistence
      * (for development), or to Binary (for production)
      * <typeparam name="TData">Data to Serialize / Deserialize</typeparam>
      */
+    [Obsolete("Not needed currently, but maybe later?")]
     public class PersistenceHandler<TData> where TData : new()
     {
         // persistent application data path

@@ -55,7 +55,7 @@ namespace StateMachines
                     }
 
                     return false;
-                case MenuStateTransition.ShowHighscore:
+                case MenuStateTransition.ShowHighScore:
                     if (currentState == MenuState.Menu)
                     {
                         TransitionTo(MenuState.HighScore, payload);
@@ -84,6 +84,8 @@ namespace StateMachines
             currentState = newState;
         }
 
+        #region Getters
+        
         private StateHandler GetHandler(MenuState type)
         {
             switch (type)
@@ -103,5 +105,7 @@ namespace StateMachines
         {
             return musicSource;
         }
+
+        #endregion
     }
 }

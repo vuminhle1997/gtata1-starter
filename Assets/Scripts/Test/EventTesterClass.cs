@@ -1,8 +1,10 @@
+using System;
 using ScriptableObjects;
 using UnityEngine;
 
 namespace Test
 {
+    [Obsolete("Not needed currently, but maybe later?")]
     public class EventTesterClass : MonoBehaviour
     {
         private void Update()

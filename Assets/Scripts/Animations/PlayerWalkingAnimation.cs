@@ -8,9 +8,12 @@ namespace Animations
         private void Awake()
         {
             SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            FrameRate = .25f;
+            FrameRate = .25f; // idle animation has a longer framerate to switch sprite
         }
 
+        /// <summary>
+        /// In each framerate, change the sprite renderer by using another serialized sprite
+        /// </summary>
         private void Update()
         {
             Timer += Time.deltaTime;

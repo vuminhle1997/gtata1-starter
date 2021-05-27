@@ -13,6 +13,10 @@ namespace UI.HighScore
             InitializeLadder();
         }
 
+        /// <summary>
+        /// Iterates through the descending sorted ladder and insert a lazy created
+        /// UI to the grid
+        /// </summary>
         private void InitializeLadder()
         {
             var highScores = highScoreLadder.highScores;

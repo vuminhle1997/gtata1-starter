@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace UI
 {
+    
+    [Obsolete("Not needed currently, but maybe later?")]
     public class PauseMenuController : MonoBehaviour
     {
         [SerializeField] private GameObject pauseMenu;

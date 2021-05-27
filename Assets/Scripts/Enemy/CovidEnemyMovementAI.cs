@@ -43,6 +43,8 @@ namespace Enemy
             MovementCycle();
         }
 
+        #region Internal Behaviour
+
         private void MoveCovidEnemy()
         {
             if (moveForward)
@@ -80,9 +82,15 @@ namespace Enemy
             }
         }
 
+        #endregion
+
+        #region Setters
+
         public void SetCurrentGameState(GameState state)
         {
             _currentGameState = state;
         }
+
+        #endregion
     }
 }

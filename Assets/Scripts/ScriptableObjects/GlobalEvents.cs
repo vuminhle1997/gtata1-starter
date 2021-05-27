@@ -8,6 +8,7 @@ namespace ScriptableObjects
      * a very loose 'observer-pattern' between event creation, event listening and event triggering
      */
     [CreateAssetMenu(menuName = "Scriptable Objects/GlobalEvents")]
+    [Obsolete("Not needed currently, but maybe later?")]
     public class GlobalEvents : ScriptableObject
     {
         #region Events

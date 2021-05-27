@@ -15,13 +15,17 @@ namespace Handlers.MenuHandler
         [SerializeField] private GameObject optionMenuGameObject;
         public override void OnEnter(Dictionary<string, object> payload = null)
         {
+#if UNITY_EDITOR
             Debug.Log("Enter State: " + $"{MenuState.Option}");
+#endif
             optionMenuGameObject.SetActive(true);
         }
 
         public override void OnExit()
         {
+#if UNITY_EDITOR
             Debug.Log("Exit State: " + $"{MenuState.Option}");
+#endif
             optionMenuGameObject.SetActive(false);
             var settingsOptions = settings.settingsOptions;
             

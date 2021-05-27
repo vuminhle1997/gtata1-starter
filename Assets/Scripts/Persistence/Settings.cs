@@ -1,8 +1,6 @@
-using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public enum Difficulty
 {
@@ -57,8 +55,6 @@ namespace Persistence
                 settingsOptions = newSettings;
             }
         }
-
-        
 
         #region Serializer/Save
 

@@ -25,7 +25,7 @@ namespace StateMachines
     {
         ShowOptions,
         ShowMenu,
-        ShowHighscore
+        ShowHighScore
     }
 
     public enum PlayerTransition

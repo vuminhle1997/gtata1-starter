@@ -16,13 +16,17 @@ namespace Handlers.PlayerHandler
         [SerializeField] private GameObject jumpSpriteGameObject;
         public override void OnEnter(Dictionary<string, object> payload)
         {
+#if UNITY_EDITOR
             Debug.Log("Exit State: " + $"{PlayerState.Jump}");
+#endif
             jumpSpriteGameObject.SetActive(true);
         }
 
         public override void OnExit()
         {
+#if UNITY_EDITOR
             Debug.Log("Enter State: " + $"{PlayerState.Jump}");
+#endif
             jumpSpriteGameObject.SetActive(false);
         }
     }

@@ -14,7 +14,7 @@ namespace Game
             _audio.volume = (settings._musicLevel / 100);
             if (!settings._enableMusic)
             {
-                _audio.Stop();
+                _audio.Pause();
             }
             else
             {

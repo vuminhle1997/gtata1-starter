@@ -9,6 +9,10 @@
             this.actor = actor;
         }
 
+        /// <summary>
+        /// Executes player's commands.
+        /// Classes which inherit this abstract class need to override this method
+        /// </summary>
         public abstract void Execute();
     }
 }

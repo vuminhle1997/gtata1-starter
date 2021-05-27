@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1250.0823, g: 1597.8466, b: 2177.6426, a: 1}
+  m_IndirectSpecularColor: {r: 1478.8682, g: 1831.9521, b: 2425.4668, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7344,8 +7344,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1734013877}
-  - component: {fileID: 1734013876}
   - component: {fileID: 1734013878}
+  - component: {fileID: 1734013876}
   m_Layer: 0
   m_Name: Game
   m_TagString: GameController
@@ -7363,11 +7363,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 75c9abd8beccc46448f3ff920eaeba68, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2672deb7605223c4f9d3028662a29fd2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.366
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -8603,7 +8603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vaccineController: {fileID: 711130445}
-  stateMachine: {fileID: 84915908}
+  playerStateMachine: {fileID: 84915908}
   playerController: {fileID: 2108180006}
 --- !u!4 &2108180005
 Transform:

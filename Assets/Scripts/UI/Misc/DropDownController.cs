@@ -13,6 +13,7 @@ namespace UI.Misc
     {
         // the setting's values
         [SerializeField] private Settings _settings;
+        
         /// <summary>
         /// source: https://www.youtube.com/watch?v=URS9A4V_yLc
         /// </summary>

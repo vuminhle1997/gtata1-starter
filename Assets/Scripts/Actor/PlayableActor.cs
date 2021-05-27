@@ -2,6 +2,9 @@
 
 namespace Actor
 {
+    /// <summary>
+    /// Abstract class/skeleton for an playable actor 
+    /// </summary>
     public abstract class PlayableActor: MonoBehaviour, IUnit, IActor
     {
         public abstract void Jump();

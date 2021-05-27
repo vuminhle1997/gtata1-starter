@@ -96,7 +96,6 @@ namespace Player
         void FixedUpdate()
         {
             currentGameState = gameStateMachine.GetCurrentGameState();
-            Debug.Log(currentGameState);
             switch (currentGameState)
             {
                 case GameState.Play:

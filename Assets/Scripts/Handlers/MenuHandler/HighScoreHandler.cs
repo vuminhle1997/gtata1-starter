@@ -22,7 +22,9 @@ namespace Handlers.MenuHandler
         /// <param name="payload"></param>
         public override void OnEnter(Dictionary<string, object> payload = null)
         {
+#if UNITY_EDITOR
             Debug.Log("Enter State: " + $"{MenuState.HighScore}");
+#endif
             highScoreGameObject.SetActive(true);
             var ladder = scorePointSerializerController.highScoreLadder;
             var _highScores = SortHighScores.GetDescendingHighScores(ladder);
@@ -34,7 +36,9 @@ namespace Handlers.MenuHandler
         /// </summary>
         public override void OnExit()
         {
+#if UNITY_EDITOR
             Debug.Log("Exit State: " + $"{MenuState.HighScore}");
+#endif
             highScores = null;
             highScoreGameObject.SetActive(false);
         }

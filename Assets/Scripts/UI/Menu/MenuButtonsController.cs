@@ -33,23 +33,27 @@ namespace UI.Menu
                     menuStateMachine.Trigger(MenuStateTransition.ShowMenu, _payload);
                     break;
                 case 4:
-                    menuStateMachine.Trigger(MenuStateTransition.ShowHighscore);
+                    menuStateMachine.Trigger(MenuStateTransition.ShowHighScore);
                     break;
                 case 5:
-                    #if UNITY_EDITOR
+#if UNITY_EDITOR
                         Debug.Log("Quit Game");
-                    #elif UNITY_STANDALONE
+#elif UNITY_STANDALONE
                         Application.Quit(); 
-                    #endif
+#endif
                     break;
                 default:
                     throw new NotImplementedException("Not implemented");
             }
         }
 
+        #region Getters
+
         public AudioSource GetAudioSource()
         {
             return audioSource;
         }
+
+        #endregion
     }
 }

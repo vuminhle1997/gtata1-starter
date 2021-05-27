@@ -10,7 +10,10 @@ namespace Animations
             SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         }
 
-        private  void Update()
+        /// <summary>
+        /// In each framerate, change the sprite renderer by using another serialized sprite
+        /// </summary>
+        private void Update()
         {
             Timer += Time.deltaTime;
 

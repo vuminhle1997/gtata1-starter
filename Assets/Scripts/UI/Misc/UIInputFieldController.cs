@@ -7,7 +7,6 @@ namespace UI.Misc
 {
     public class UIInputFieldController: MonoBehaviour
     {
-        [SerializeField] private PointsTracker pointsTracker;
         private TMP_InputField inputField;
         private String name;
 

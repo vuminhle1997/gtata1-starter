@@ -5,6 +5,9 @@ using UnityEngine.Serialization;
 
 namespace Player
 {
+    /// <summary>
+    /// Script specifically for the vaccine tip.
+    /// </summary>
     public class VaccineController : MonoBehaviour
     {
         [SerializeField] private Transform vaccineTip;
