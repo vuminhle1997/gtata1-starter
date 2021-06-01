@@ -9,10 +9,8 @@ namespace MeshGenerator
     public class TorusMeshGenerator : MonoBehaviour
     {
         private MeshFilter meshFilter;
-
         private MeshRenderer meshRenderer;
-
-
+        
         private void Awake()
         {
             meshFilter = GetComponent<MeshFilter>();
@@ -26,42 +24,58 @@ namespace MeshGenerator
 
         private void GenerateTorus()
         {
-            Torus torus = new Torus();
+            Torus torus = new Torus(12, 32, 2f, 0.25f);
             Mesh mesh = torus.GetMesh();
-
-            Debug.Log(torus.Vertices);
-            Debug.Log(torus.Vertices);
 
             meshFilter.mesh = mesh;
         }
     }
 
+    /// <summary>
+    /// sources:
+    /// - https://gamedev.stackexchange.com/a/16850
+    /// - DE: https://de.wikipedia.org/wiki/Torus#Parametrisierung
+    /// - EN: https://en.wikipedia.org/wiki/Torus#Geometry
+    /// Some code snippets where taken from this: https://forum.unity.com/threads/torus-in-unity.8487/
+    /// But I tried my best to understand this and implemented my own code.
+    /// </summary>
     public class Torus
     {
         // segments of larger circle
-        private int torusSegments = 12;
+        private int torusSegments;
         // segments of circle around point P
-        private int tubeSegments = 32;
+        private int tubeSegments;
 
-        private float majorRadius = 2f; // R
-        private float minorRadius = 0.25f; // r
+        private float majorRadius; // R
+        private float minorRadius; // r
         private Mesh mesh;
 
-        public Vector3[] Vertices
+        public Torus(int torusSegments, int tubeSegments, float majorRadius, float minorRadius)
         {
-            get;
-            set;
-        }
-
-        public int[] Triangles
-        {
-            get;
-            set;
+            this.torusSegments = torusSegments;
+            this.tubeSegments = tubeSegments;
+            this.majorRadius = majorRadius;
+            this.minorRadius = minorRadius;
+            mesh = new Mesh();
+            
+            GenerateVerticesAndIndices();
         }
 
         public Torus()
         {
+            torusSegments = 12;
+            tubeSegments = 32;
+            majorRadius = 2f;
+            minorRadius = 0.25f;
             mesh = new Mesh();
+            
+            GenerateVerticesAndIndices();
+        }
+
+        #region Initializer
+
+        private void GenerateVerticesAndIndices()
+        {
             Vector3[] vertices = new Vector3[torusSegments * tubeSegments];
             List<Vector3[]> segmentsList = new List<Vector3[]>();
             // create vertices
@@ -71,6 +85,7 @@ namespace MeshGenerator
                 var phi = (2 * Math.PI / torusSegments) * i;
                 for (int j = 0; j < tubeSegments; j++)
                 {
+                    // formula taken from wikipedia source
                     var theta = (2 * Math.PI / tubeSegments) * j;
                     var x = (float) ((majorRadius + minorRadius * Math.Cos(theta)) * Math.Cos(phi));
                     var y = (float) ((majorRadius + minorRadius * Math.Cos(theta)) * Math.Sin(phi));
@@ -80,15 +95,13 @@ namespace MeshGenerator
                     var index = i * tubeSegments + j;
                     vertexesOfSegment[j] = vertex;
                     vertices[index] = vertex;
-                    // vertexesOfSegment = vertexesOfSegment.Append(vertex).ToArray();
-                    // vertices = vertices.Append(vertex).ToArray();
                 }
                 segmentsList.Add(vertexesOfSegment);
             }
             
             // create triangles and indices
             // total vertices * primitives * indices (3 = vertex for one primitive [GL_TRIANGLE])
-            int totalTriangles = ((torusSegments * tubeSegments) * 2) * 3;
+            // int totalTriangles = ((torusSegments * tubeSegments) * 2) * 3;
             List<int> triangles = new List<int>();
             for (int i = 0; i < torusSegments; i++)
             {
@@ -99,34 +112,32 @@ namespace MeshGenerator
                 for (int j = 0; j < currentTorusTubeRing.Length; j++)
                 {
                     var _next = (j + 1) % currentTorusTubeRing.Length;
-
-                    var v1 = currentTorusTubeRing[i];
-                    var v2 = currentTorusTubeRing[_next];
-                    var v3 = nextTorusTubeRing[_next];
-                    var v4 = nextTorusTubeRing[j];
-
+                    
                     // v1 --- v4    
                     // |  \    |
                     // |   \   |
                     // |    \  |   
                     // v2 --- v3
+                    var v1 = currentTorusTubeRing[j];
+                    var v2 = currentTorusTubeRing[_next];
+                    var v3 = nextTorusTubeRing[_next];
+                    var v4 = nextTorusTubeRing[j];
+                    
                     var i1 = Array.IndexOf(vertices, v1);
                     var i2 = Array.IndexOf(vertices, v2);
                     var i3 = Array.IndexOf(vertices, v3);
                     var i4 = Array.IndexOf(vertices, v4);
                     
+                    // draws first triangle (v1-v2-v3)
                     triangles.Add(i1);
                     triangles.Add(i2);
                     triangles.Add(i3);
-
-                    triangles.Add(i1);
+                    // draws second triangle (v3-v4-v1)
                     triangles.Add(i3);
                     triangles.Add(i4);
+                    triangles.Add(i1);
                 }
             }
-
-            Vertices = vertices;
-            Triangles = triangles.ToArray();
             
             this.mesh.vertices = vertices;
             this.mesh.triangles = triangles.ToArray();
@@ -134,11 +145,15 @@ namespace MeshGenerator
             this.mesh.Optimize();
         }
 
+        #endregion
+
+        #region Getters
+
         public Mesh GetMesh()
         {
-            
-
             return mesh;
         }
+
+        #endregion
     }
 }
