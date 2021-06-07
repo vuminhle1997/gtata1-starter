@@ -31,7 +31,7 @@ namespace MeshGenerator
         /// </summary>
         private void GenerateTorus()
         {
-            Torus torus = new Torus(12, 32, 2f, 0.25f);
+            Torus torus = new Torus(64, 64, 2f, 0.25f);
             Mesh mesh = torus.GetMesh();
 
             meshFilter.mesh = mesh;
@@ -63,6 +63,13 @@ namespace MeshGenerator
         private List<Vector3[]> segmentsList;
         private List<int> triangles;
 
+        /// <summary>
+        /// Constructor method with parameters
+        /// </summary>
+        /// <param name="torusSegments"></param>
+        /// <param name="tubeSegments"></param>
+        /// <param name="majorRadius"></param>
+        /// <param name="minorRadius"></param>
         public Torus(int torusSegments, int tubeSegments, float majorRadius, float minorRadius)
         {
             this.torusSegments = torusSegments;
@@ -76,6 +83,9 @@ namespace MeshGenerator
             GenerateMeshData();
         }
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Torus()
         {
             torusSegments = 12;

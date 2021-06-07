@@ -21,12 +21,13 @@ namespace MeshGenerator
 
         private void Start()
         {
-            Wave wave = new Wave(10, 10);
+            Wave wave = new Wave(30, 30);
             Mesh mesh = wave.GetMesh();
 
             meshFilter.mesh = mesh;
             meshCollider.sharedMesh = mesh;
             meshCollider.convex = true;
+            MakeBackfaceVisible();
         }
 
         private void Update()
@@ -34,8 +35,43 @@ namespace MeshGenerator
             time += 50f * Time.deltaTime;
             transform.rotation = Quaternion.Euler(0f, 0f, time);
         }
+
+        /// <summary>
+        /// Solution: http://answers.unity.com/answers/723483/view.html
+        /// Makes the backface of this mesh visible!
+        /// </summary>
+        private void MakeBackfaceVisible()
+        {
+            Mesh mesh = meshFilter.mesh;
+            Vector3[] vertices = mesh.vertices;
+            int verticesLength = vertices.Length;
+            Vector3[] newVerts = new Vector3[verticesLength * 2];
+            for (int j = 0; j < verticesLength; j++){
+                // duplicate vertices and uvs:
+                newVerts[j] = newVerts[j+verticesLength] = vertices[j];
+            }
+            int[] triangles = mesh.triangles;
+            int trianglesLength = triangles.Length;
+            int[] newTris = new int[trianglesLength * 2]; // double the triangles
+            for (int i=0; i < trianglesLength; i+=3){
+                // copy the original triangle
+                newTris[i] = triangles[i];
+                newTris[i+1] = triangles[i+1];
+                newTris[i+2] = triangles[i+2];
+                // save the new reversed triangle
+                int j = i+trianglesLength; 
+                newTris[j] = triangles[i]+verticesLength;
+                newTris[j+2] = triangles[i+1]+verticesLength;
+                newTris[j+1] = triangles[i+2]+verticesLength;
+            }
+            mesh.vertices = newVerts;
+            mesh.triangles = newTris; // assign triangles last!
+        }
     }
 
+    /// <summary>
+    /// Implemented by myself without any help
+    /// </summary>
     public class Wave
     {
         private List<int> triangles;
@@ -51,6 +87,7 @@ namespace MeshGenerator
         {
             this.xDir = xDir;
             this.zDir = zDir;
+            mesh = new Mesh();
             
             GenerateVertices();
             GenerateTriangles();
@@ -59,12 +96,14 @@ namespace MeshGenerator
 
         #region Initializer
 
+        /// <summary>
+        /// Generates vertices for this mesh
+        /// </summary>
         private void GenerateVertices()
         {
             vertices = new List<Vector3>();
             segmentsList = new List<Vector3[]>();
-            mesh = new Mesh();
-            
+
             for (int x = 0; x < this.xDir; x++)
             {
                 Vector3[] verticesOfSegment = new Vector3[zDir];
@@ -84,6 +123,9 @@ namespace MeshGenerator
             }
         }
 
+        /// <summary>
+        /// Generates triangle indices for this mesh
+        /// </summary>
         private void GenerateTriangles()
         {
             triangles = new List<int>();
@@ -124,6 +166,9 @@ namespace MeshGenerator
             }
         }
 
+        /// <summary>
+        /// Generates mesh data by attaching the vertices and triangles to mesh
+        /// </summary>
         private void GenerateMeshData()
         {
             mesh.vertices = vertices.ToArray();
@@ -137,6 +182,10 @@ namespace MeshGenerator
 
         #region Getters
 
+        /// <summary>
+        /// Returns mesh
+        /// </summary>
+        /// <returns></returns>
         public Mesh GetMesh()
         {
             return mesh;
