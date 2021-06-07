@@ -54,14 +54,27 @@ namespace MeshGenerator
 
             GenerateVertices();
             GenerateTriangles();
-            
+            GenerateMeshData();
+        }
+
+        #region Initializer
+
+        /// <summary>
+        /// Attaches the generated vertices and triangles to the mesh.
+        /// Recalculates the bounds and optimizes the mesh.
+        /// </summary>
+        private void GenerateMeshData()
+        {
             mesh.vertices = vertices.ToArray();
             mesh.triangles = triangles.ToArray();
-            
+
             mesh.RecalculateBounds();
             mesh.Optimize();
         }
 
+        /// <summary>
+        /// Generates the vertices for the mesh data
+        /// </summary>
         private void GenerateVertices()
         {
             vertices = new List<Vector3>();
@@ -83,6 +96,9 @@ namespace MeshGenerator
             }
         }
 
+        /// <summary>
+        /// Generates the triangles for the Mesh data
+        /// </summary>
         private void GenerateTriangles()
         {
             triangles = new List<int>();
@@ -125,6 +141,12 @@ namespace MeshGenerator
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Returns Mesh
+        /// </summary>
+        /// <returns>Mesh - the mash data</returns>
         public Mesh GetMesh()
         {
             return mesh;
