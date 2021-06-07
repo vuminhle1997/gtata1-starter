@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace MeshGenerator
 {
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class SphereMeshGenerator : MonoBehaviour
     {
         private MeshFilter meshFilter;
@@ -20,7 +21,7 @@ namespace MeshGenerator
 
         void Start()
         {
-            Sphere sphere = new Sphere(24, 12, 1f);
+            Sphere sphere = new Sphere(64, 64, 1f);
             Mesh mesh = sphere.GetMesh();
 
             meshFilter.mesh = mesh;
@@ -102,13 +103,12 @@ namespace MeshGenerator
         private void GenerateTriangles()
         {
             triangles = new List<int>();
-
+            var tempArray = vertices.ToArray();
             for(int m = 0; m < this.latitude; m++)
             {
                 var next = (m + 1) % this.latitude;
                 var currentArea = segmentsList[m];
                 var nextArea = segmentsList[next];
-                var tempArray = vertices.ToArray();
                 for (int n = 0; n < currentArea.Length; n++)
                 {
                     var _next = (n + 1) % currentArea.Length;

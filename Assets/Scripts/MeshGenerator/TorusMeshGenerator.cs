@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace MeshGenerator
 {
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class TorusMeshGenerator : MonoBehaviour
     {
         private MeshFilter meshFilter;
