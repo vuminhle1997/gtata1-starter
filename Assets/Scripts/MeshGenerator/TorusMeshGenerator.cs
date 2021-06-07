@@ -10,11 +10,13 @@ namespace MeshGenerator
     {
         private MeshFilter meshFilter;
         private MeshRenderer meshRenderer;
+        private MeshCollider meshCollider;
         
         private void Awake()
         {
             meshFilter = GetComponent<MeshFilter>();
             meshRenderer = GetComponent<MeshRenderer>();
+            meshCollider = GetComponent<MeshCollider>();
         }
 
         private void Start()
@@ -22,12 +24,18 @@ namespace MeshGenerator
             GenerateTorus();
         }
 
+        /// <summary>
+        /// Generates Torus-Mesh and attaches mesh to the MeshFilter.
+        /// Additionally adds a collider
+        /// </summary>
         private void GenerateTorus()
         {
             Torus torus = new Torus(12, 32, 2f, 0.25f);
             Mesh mesh = torus.GetMesh();
 
             meshFilter.mesh = mesh;
+            meshCollider.sharedMesh = mesh;
+            meshCollider.convex = true;
         }
     }
 
