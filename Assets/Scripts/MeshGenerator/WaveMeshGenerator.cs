@@ -111,7 +111,7 @@ namespace MeshGenerator
                 {
                     float fraction = (z / (float) zDir);
                     float _x = x;
-                    float _y = (float) Math.Sin((2 * Math.PI) * fraction);
+                    float _y = (float) Math.Sin((2 * Math.PI) * fraction) * 3f;
                     float _z = z;
 
                     Vector3 vertex = new Vector3(_x, _y, _z);
