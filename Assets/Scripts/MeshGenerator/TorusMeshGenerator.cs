@@ -124,13 +124,13 @@ namespace MeshGenerator
             // total vertices * primitives * indices (3 = vertex for one primitive [GL_TRIANGLE])
             // int totalTriangles = ((torusSegments * tubeSegments) * 2) * 3;
             triangles = new List<int>();
-            for (int i = 0; i < torusSegments; i++)
+            for (var i = 0; i < torusSegments; i++)
             {
                 var next = (i + 1) % torusSegments;
                 var currentTorusTubeRing = segmentsList[i];
                 var nextTorusTubeRing = segmentsList[next];
 
-                for (int j = 0; j < currentTorusTubeRing.Length; j++)
+                for (var j = 0; j < currentTorusTubeRing.Length; j++)
                 {
                     var _next = (j + 1) % currentTorusTubeRing.Length;
 
@@ -169,18 +169,18 @@ namespace MeshGenerator
             vertices = new Vector3[torusSegments * tubeSegments];
             segmentsList = new List<Vector3[]>();
             // create vertices
-            for (int i = 0; i < torusSegments; i++)
+            for (var i = 0; i < torusSegments; i++)
             {
-                Vector3[] vertexesOfSegment = new Vector3[tubeSegments];
+                var vertexesOfSegment = new Vector3[tubeSegments];
                 var phi = (2 * Math.PI / torusSegments) * i;
-                for (int j = 0; j < tubeSegments; j++)
+                for (var j = 0; j < tubeSegments; j++)
                 {
                     // formula taken from wikipedia source
                     var theta = (2 * Math.PI / tubeSegments) * j;
                     var x = (float) ((majorRadius + minorRadius * Math.Cos(theta)) * Math.Cos(phi));
                     var y = (float) ((majorRadius + minorRadius * Math.Cos(theta)) * Math.Sin(phi));
                     var z = (float) (minorRadius * Math.Sin(theta));
-                    Vector3 vertex = new Vector3(x, y, z);
+                    var vertex = new Vector3(x, y, z);
 
                     var index = i * tubeSegments + j;
                     vertexesOfSegment[j] = vertex;

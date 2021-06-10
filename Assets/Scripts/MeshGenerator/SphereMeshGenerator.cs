@@ -21,8 +21,8 @@ namespace MeshGenerator
 
         void Start()
         {
-            Sphere sphere = new Sphere(64, 64, 1f);
-            Mesh mesh = sphere.GetMesh();
+            var sphere = new Sphere(64, 64, 1f);
+            var mesh = sphere.GetMesh();
 
             meshFilter.mesh = mesh;
             meshCollider.sharedMesh = mesh;
@@ -82,16 +82,16 @@ namespace MeshGenerator
         {
             vertices = new List<Vector3>();
             segmentsList = new List<Vector3[]>();
-            for (int m = 0; m <= this.latitude; m++)
+            for (var m = 0; m <= latitude; m++)
             {
-                Vector3[] verticesOfSegment = new Vector3[this.longitude];
-                for (int n = 0; n < this.longitude; n++)
+                var verticesOfSegment = new Vector3[longitude];
+                for (var n = 0; n < longitude; n++)
                 {
-                    float x = Mathf.Sin(Mathf.PI * m/this.latitude) * Mathf.Cos(2 * Mathf.PI * n/this.longitude);
-                    float y = Mathf.Sin(Mathf.PI * m/this.latitude) * Mathf.Sin(2 * Mathf.PI * n/this.longitude);
-                    float z = Mathf.Cos(Mathf.PI * m / this.latitude);
+                    var x = Mathf.Sin(Mathf.PI * m/latitude) * Mathf.Cos(2 * Mathf.PI * n/longitude);
+                    var y = Mathf.Sin(Mathf.PI * m/latitude) * Mathf.Sin(2 * Mathf.PI * n/longitude);
+                    var z = Mathf.Cos(Mathf.PI * m /latitude);
 
-                    Vector3 vertex = new Vector3(x, y, z) * this.radius;
+                    var vertex = new Vector3(x, y, z) * radius;
                     verticesOfSegment[n] = vertex;
                     vertices.Add(vertex);
                 }
@@ -105,17 +105,17 @@ namespace MeshGenerator
         private void GenerateTriangles()
         {
             triangles = new List<int>();
-            var tempArray = vertices.ToArray();
-            for(int m = 0; m < this.latitude; m++)
+            Vector3[] tempArray = vertices.ToArray();
+            for(var m = 0; m < latitude; m++)
             {
-                var next = (m + 1) % this.latitude;
-                if (m == this.latitude-1)
+                var next = (m + 1) % latitude;
+                if (m == latitude-1)
                 {
-                    next = this.latitude;
+                    next = latitude;
                 }
                 var currentArea = segmentsList[m];
                 var nextArea = segmentsList[next];
-                for (int n = 0; n < currentArea.Length; n++)
+                for (var n = 0; n < currentArea.Length; n++)
                 {
                     var _next = (n + 1) % currentArea.Length;
             

@@ -17,12 +17,13 @@ namespace MeshGenerator
             meshFilter = GetComponent<MeshFilter>();
             meshRender = GetComponent<MeshRenderer>();
             meshCollider = GetComponent<MeshCollider>();
+            
         }
 
         private void Start()
         {
-            Wave wave = new Wave(30, 30);
-            Mesh mesh = wave.GetMesh();
+            var wave = new Wave(30, 30);
+            var mesh = wave.GetMesh();
 
             meshFilter.mesh = mesh;
             meshCollider.sharedMesh = mesh;
@@ -42,24 +43,24 @@ namespace MeshGenerator
         /// </summary>
         private void MakeBackfaceVisible()
         {
-            Mesh mesh = meshFilter.mesh;
-            Vector3[] vertices = mesh.vertices;
-            int verticesLength = vertices.Length;
-            Vector3[] newVerts = new Vector3[verticesLength * 2];
-            for (int j = 0; j < verticesLength; j++){
+            var mesh = meshFilter.mesh;
+            var vertices = mesh.vertices;
+            var verticesLength = vertices.Length;
+            var newVerts = new Vector3[verticesLength * 2];
+            for (var j = 0; j < verticesLength; j++){
                 // duplicate vertices and uvs:
                 newVerts[j] = newVerts[j+verticesLength] = vertices[j];
             }
-            int[] triangles = mesh.triangles;
-            int trianglesLength = triangles.Length;
-            int[] newTris = new int[trianglesLength * 2]; // double the triangles
-            for (int i=0; i < trianglesLength; i+=3){
+            var triangles = mesh.triangles;
+            var trianglesLength = triangles.Length;
+            var newTris = new int[trianglesLength * 2]; // double the triangles
+            for (var i=0; i < trianglesLength; i+=3){
                 // copy the original triangle
                 newTris[i] = triangles[i];
                 newTris[i+1] = triangles[i+1];
                 newTris[i+2] = triangles[i+2];
                 // save the new reversed triangle
-                int j = i+trianglesLength; 
+                var j = i+trianglesLength; 
                 newTris[j] = triangles[i]+verticesLength;
                 newTris[j+2] = triangles[i+1]+verticesLength;
                 newTris[j+1] = triangles[i+2]+verticesLength;
@@ -104,17 +105,17 @@ namespace MeshGenerator
             vertices = new List<Vector3>();
             segmentsList = new List<Vector3[]>();
 
-            for (int x = 0; x < this.xDir; x++)
+            for (var x = 0; x < xDir; x++)
             {
-                Vector3[] verticesOfSegment = new Vector3[zDir];
-                for (int z = 0; z < this.zDir; z++)
+                var verticesOfSegment = new Vector3[zDir];
+                for (var z = 0; z < zDir; z++)
                 {
-                    float fraction = (z / (float) zDir);
-                    float _x = x;
-                    float _y = (float) Math.Sin((2 * Math.PI) * fraction) * 3f;
-                    float _z = z;
+                    var fraction = (z / (float) zDir);
+                    var _x = x;
+                    var _y = (float) Math.Sin((2 * Math.PI) * fraction) * 3f;
+                    var _z = z;
 
-                    Vector3 vertex = new Vector3(_x, _y, _z);
+                    var vertex = new Vector3(_x, _y, _z);
 
                     verticesOfSegment[z] = vertex;
                     vertices.Add(vertex);
@@ -130,12 +131,12 @@ namespace MeshGenerator
         {
             triangles = new List<int>();
             var tempArray = vertices.ToArray();
-            for (int x = 0; x < xDir-1; x++)
+            for (var x = 0; x < xDir-1; x++)
             {
                 var next = (x + 1) % xDir;
                 var currArea = segmentsList[x];
                 var nextArea = segmentsList[next];
-                for (int z = 0; z < zDir-1; z++)
+                for (var z = 0; z < zDir-1; z++)
                 {
                     var offset = (z + 1) % currArea.Length;
                     var v1 = currArea[z];
