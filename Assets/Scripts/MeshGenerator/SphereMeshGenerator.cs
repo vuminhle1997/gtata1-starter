@@ -82,7 +82,7 @@ namespace MeshGenerator
         {
             vertices = new List<Vector3>();
             segmentsList = new List<Vector3[]>();
-            for (int m = 0; m < this.latitude; m++)
+            for (int m = 0; m <= this.latitude; m++)
             {
                 Vector3[] verticesOfSegment = new Vector3[this.longitude];
                 for (int n = 0; n < this.longitude; n++)
@@ -109,12 +109,10 @@ namespace MeshGenerator
             for(int m = 0; m < this.latitude; m++)
             {
                 var next = (m + 1) % this.latitude;
-                if (m == this.latitude - 1)
+                if (m == this.latitude-1)
                 {
-                    // TODO: fix bottom cap of sphere
-                    return;
+                    next = this.latitude;
                 }
-                
                 var currentArea = segmentsList[m];
                 var nextArea = segmentsList[next];
                 for (int n = 0; n < currentArea.Length; n++)
