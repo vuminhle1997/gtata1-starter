@@ -153,9 +153,9 @@ namespace MeshGenerator
                     triangles.Add(i2);
                     triangles.Add(i3);
                     // draws second triangle (v3-v4-v1)
-                    triangles.Add(i3);
-                    triangles.Add(i4);
-                    triangles.Add(i1);
+                    // triangles.Add(i3);
+                    // triangles.Add(i4);
+                    // triangles.Add(i1);
                     
                     // I don't know what I did here
                     // but it works for generating sphere faces
@@ -175,6 +175,8 @@ namespace MeshGenerator
             mesh.triangles = triangles.ToArray();
             
             mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
+            mesh.RecalculateTangents();
             mesh.Optimize();
         }
 

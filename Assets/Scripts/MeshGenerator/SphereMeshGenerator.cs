@@ -70,6 +70,8 @@ namespace MeshGenerator
             mesh.triangles = triangles.ToArray();
 
             mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
+            mesh.RecalculateTangents();
             mesh.Optimize();
         }
 
@@ -107,6 +109,12 @@ namespace MeshGenerator
             for(int m = 0; m < this.latitude; m++)
             {
                 var next = (m + 1) % this.latitude;
+                if (m == this.latitude - 1)
+                {
+                    // TODO: fix bottom cap of sphere
+                    return;
+                }
+                
                 var currentArea = segmentsList[m];
                 var nextArea = segmentsList[next];
                 for (int n = 0; n < currentArea.Length; n++)
@@ -128,9 +136,9 @@ namespace MeshGenerator
                     triangles.Add(i2);
                     triangles.Add(i3);
                     // draws second triangle (v3-v4-v1)
-                    triangles.Add(i3);
-                    triangles.Add(i4);
-                    triangles.Add(i1);
+                    // triangles.Add(i3);
+                    // triangles.Add(i4);
+                    // triangles.Add(i1);
                     
                     // I don't know what I did here
                     // but it works for generating sphere faces

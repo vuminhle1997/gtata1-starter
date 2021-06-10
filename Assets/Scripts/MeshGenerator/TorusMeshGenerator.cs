@@ -109,8 +109,10 @@ namespace MeshGenerator
         {
             this.mesh.vertices = this.vertices;
             this.mesh.triangles = this.triangles.ToArray();
-            this.mesh.RecalculateBounds();
-            this.mesh.Optimize();
+            mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
+            mesh.RecalculateTangents();
+            mesh.Optimize();
         }
 
         /// <summary>
