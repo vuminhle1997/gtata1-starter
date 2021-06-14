@@ -33,8 +33,8 @@ namespace MeshGenerator
 
         private void Update()
         {
-            time += 50f * Time.deltaTime;
-            transform.rotation = Quaternion.Euler(0f, 0f, time);
+            // time += 50f * Time.deltaTime;
+            // transform.rotation = Quaternion.Euler(0f, 0f, time);
         }
 
         /// <summary>
