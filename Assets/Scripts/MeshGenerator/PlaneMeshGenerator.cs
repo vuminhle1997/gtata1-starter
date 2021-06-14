@@ -74,7 +74,7 @@ namespace MeshGenerator
             this.zDir = zDir;
             mesh = new Mesh();
             
-            GenerateVertices();
+            GenerateVerticesAndUvs();
             GenerateTriangles();
             GenerateMeshData();
         }
@@ -84,11 +84,12 @@ namespace MeshGenerator
         /// <summary>
         /// Generates vertices for this mesh
         /// </summary>
-        private void GenerateVertices()
+        private void GenerateVerticesAndUvs()
         {
             vertices = new List<Vector3>();
             segmentsList = new List<Vector3[]>();
 
+            // this is necessary for the shader graph
             uvs = new List<Vector2>();
             
             for (var x = 0; x < xDir; x++)
@@ -178,84 +179,5 @@ namespace MeshGenerator
         }
 
         #endregion
-    }
-
-    public class AnotherPlane
-    {
-        private Mesh mesh;
-        private int x;
-        private int y;
-        public AnotherPlane(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-            mesh = new Mesh();
-            GenerateMeshData();
-        }
-        
-        public AnotherPlane()
-        {
-            this.x = 100;
-            this.y = 100;
-            mesh = new Mesh();
-            
-            GenerateMeshData();
-        }
-
-        private void GenerateMeshData()
-        {
-            var subdivisions = new Vector2Int(x, y);
-            var vertexSize = subdivisions + new Vector2Int(1, 1);
-
-            var vertices = new Vector3[vertexSize.x * vertexSize.y];
-            var uvs = new Vector2[vertices.Length];
-
-            for (var _y = 0; _y < vertexSize.y; _y++)
-            {
-                var v = (1f / subdivisions.y) * _y;
-                for (var _x = 0; _x < vertexSize.x; _x++)
-                {
-                    var u = (1f / subdivisions.x) * _x;
-
-                    var vertex = new Vector3(u, v, 0);
-
-                    var uv = new Vector2(u, v);
-
-                    var index = _x + (_y * vertexSize.x);
-
-                    vertices[index] = vertex;
-                    uvs[index] = uv;
-                }
-            }
-
-            var triangles = new int[subdivisions.x * subdivisions.y * 6];
-
-            for (var i = 0; i < subdivisions.x * subdivisions.y; i++)
-            {
-                var triangleIndex = (i % subdivisions.x) + (i / subdivisions.x) + vertexSize.x;
-                var indexer = i * 6;
-
-                triangles[indexer + 0] = triangleIndex;
-                triangles[indexer + 1] = triangleIndex + subdivisions.x + 1;
-                triangles[indexer + 2] = triangleIndex + 1;
-
-                triangles[indexer + 3] = triangleIndex + 1;
-                triangles[indexer + 4] = triangleIndex + subdivisions.x + 1;
-                triangles[indexer + 5] = triangleIndex + subdivisions.x + 2;
-            }
-
-            mesh.vertices = vertices;
-            mesh.triangles = triangles;
-            mesh.uv = uvs;
-            
-            mesh.RecalculateBounds();
-            mesh.RecalculateNormals();
-            mesh.RecalculateTangents();
-        }
-
-        public Mesh GetMesh()
-        {
-            return mesh;
-        }
     }
 }

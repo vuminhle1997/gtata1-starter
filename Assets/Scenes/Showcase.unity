@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 1478.8682, g: 1831.9521, b: 2425.4668, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -823,7 +823,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f4353fe6418d8c489852114417ae84b, type: 2}
+  - {fileID: 2100000, guid: 69b8a08d5b1ac49f3b144b3be5d2f83a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -970,7 +970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c3823b73c48f84240b0cba0a0e19b102, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.64
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c3823b73c48f84240b0cba0a0e19b102, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1011,6 +1011,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c3823b73c48f84240b0cba0a0e19b102, type: 3}
       propertyPath: m_Name
       value: LakeSurface
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c3823b73c48f84240b0cba0a0e19b102, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3823b73c48f84240b0cba0a0e19b102, type: 3}
