@@ -29,6 +29,8 @@ namespace MeshGenerator
             meshCollider.sharedMesh = mesh;
             meshCollider.convex = true;
             MakeBackfaceVisible();
+
+            transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         }
 
         private void Update()

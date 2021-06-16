@@ -123,16 +123,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_01c3f66505bd43579b6e813f1c0c1932: 9
-    - Vector1_0f2bbf2a4d6c4655888d7f27ed65c7cd: -3.12
+    - Vector1_0f2bbf2a4d6c4655888d7f27ed65c7cd: -2.26
     - Vector1_206af7a706364e53a1703a691bbd3a48: 4.5
     - Vector1_5e35a5a358b84cdc97b6eb02ebdd7e95: 0
-    - Vector1_6e197d8af0a647389aee70208f5538a5: 0.18
+    - Vector1_6e197d8af0a647389aee70208f5538a5: 0.01
     - Vector1_7a302c52761c4cc68b46a54c2a1fd343: 1
     - Vector1_abe4eb2466ed4a18861feb6fb0af0c3b: 10
     - Vector1_ac7d5f2036564c69bffd31cf897f5439: 0
     - Vector1_b86094085e0e4e92acb9130d73c8e56f: 10
-    - Vector1_c7c8640dfd01435bab57920f8edd8931: 2.29
-    - Vector1_fa37905cf5e548a79269d926809f39e1: 1
+    - Vector1_c7c8640dfd01435bab57920f8edd8931: 0.73
+    - Vector1_fa37905cf5e548a79269d926809f39e1: 7.15
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1

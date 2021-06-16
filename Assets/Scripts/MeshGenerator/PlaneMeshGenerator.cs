@@ -24,7 +24,7 @@ namespace MeshGenerator
             var mesh = plane.GetMesh();
 
             meshFilter.mesh = mesh;
-            MakeBackfaceVisible();
+            // MakeBackfaceVisible();
             transform.localScale = new Vector3(.3f, 1, .3f);
         }
         
