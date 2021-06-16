@@ -20,7 +20,7 @@ namespace MeshGenerator
 
         private void Start()
         {
-            var plane = new Plane(150, 150);
+            var plane = new Plane(50, 50);
             var mesh = plane.GetMesh();
 
             meshFilter.mesh = mesh;
