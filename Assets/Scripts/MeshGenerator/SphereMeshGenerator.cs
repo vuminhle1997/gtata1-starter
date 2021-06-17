@@ -53,7 +53,7 @@ namespace MeshGenerator
             this.longitude = longitude;
             this.radius = radius;
 
-            GenerateVertices();
+            GenerateVerticesAndUvs();
             GenerateTriangles();
             GenerateMeshData();
         }
@@ -78,10 +78,12 @@ namespace MeshGenerator
         /// <summary>
         /// Generates the vertices for the mesh data
         /// </summary>
-        private void GenerateVertices()
+        private void GenerateVerticesAndUvs()
         {
             vertices = new List<Vector3>();
             segmentsList = new List<Vector3[]>();
+
+            var uvs = new List<Vector2>();
             for (var m = 0; m <= latitude; m++)
             {
                 var verticesOfSegment = new Vector3[longitude];
@@ -91,12 +93,16 @@ namespace MeshGenerator
                     var y = Mathf.Sin(Mathf.PI * m/latitude) * Mathf.Sin(2 * Mathf.PI * n/longitude);
                     var z = Mathf.Cos(Mathf.PI * m /latitude);
 
+                    var uv = new Vector2(x, y);
                     var vertex = new Vector3(x, y, z) * radius;
                     verticesOfSegment[n] = vertex;
+                    uvs.Add(uv);
                     vertices.Add(vertex);
                 }
                 segmentsList.Add(verticesOfSegment);
             }
+
+            mesh.uv = uvs.ToArray();
         }
 
         /// <summary>
