@@ -37,6 +37,7 @@ namespace MeshGenerator
         private float radius;
         private List<Vector3> vertices;
         private List<Vector3[]> segmentsList;
+        private List<Vector2> uvs;
         private List<int> triangles;
         private Mesh mesh;
 
@@ -68,6 +69,7 @@ namespace MeshGenerator
         {
             mesh.vertices = vertices.ToArray();
             mesh.triangles = triangles.ToArray();
+            mesh.uv = uvs.ToArray();
 
             mesh.RecalculateBounds();
             mesh.RecalculateNormals();
@@ -83,7 +85,7 @@ namespace MeshGenerator
             vertices = new List<Vector3>();
             segmentsList = new List<Vector3[]>();
 
-            var uvs = new List<Vector2>();
+            uvs = new List<Vector2>();
             for (var m = 0; m <= latitude; m++)
             {
                 var verticesOfSegment = new Vector3[longitude];
@@ -101,8 +103,6 @@ namespace MeshGenerator
                 }
                 segmentsList.Add(verticesOfSegment);
             }
-
-            mesh.uv = uvs.ToArray();
         }
 
         /// <summary>
