@@ -3,7 +3,7 @@ Shader "Exercise3/PhongShader"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _MainTex ("Texture", 2D) = "red" {}
         _LightPoint ("Light Point Postion", Vector) = (0, 0, 0, 0)
         _AmbientCoefficient ("Ambient Coefficient", Float) = 1.0
         _DiffuseCoefficient ("Diffuse Coefficient", Float) = 1.0
@@ -87,7 +87,10 @@ Shader "Exercise3/PhongShader"
             {
                 float3 L = normalize(output.worldPosition - _LightPoint.xyz);
                 float3 N = normalize(output.normal);
-                float attenuation = 1/pow(length(L), 2);
+                // for specular color
+                float3 V = normalize(-output.worldPosition);
+                float3 R = reflect(-L, N);
+                float attenuation = 1/pow(length(L), 2); // f
 
                 // Ambient Color
                 // TODO: fix this
@@ -97,8 +100,6 @@ Shader "Exercise3/PhongShader"
                 float phongDiffuse = length(_DiffuseColor.rgb);
                 float DiffuseColor = attenuation * phongDiffuse * _DiffuseCoefficient * dot(L, N);
                 // Specular Color
-                float3 V = normalize(-output.worldPosition);
-                float3 R = reflect(-L, N);
                 float phongSpec = length(_SpecularColor.rgb);
                 float SpecularColor = attenuation * _SpecularCoefficient * phongSpec * pow(max(0.0, dot(V, R)), _Shininess); 
 
