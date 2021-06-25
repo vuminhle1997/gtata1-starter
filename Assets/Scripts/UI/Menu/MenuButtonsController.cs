@@ -42,6 +42,9 @@ namespace UI.Menu
                         Application.Quit(); 
 #endif
                     break;
+                case 42:
+                    SceneManager.LoadScene("Showcase", LoadSceneMode.Single);
+                    break;
                 default:
                     throw new NotImplementedException("Not implemented");
             }
