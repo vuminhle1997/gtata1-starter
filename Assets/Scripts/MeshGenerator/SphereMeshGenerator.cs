@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace MeshGenerator
@@ -11,12 +10,14 @@ namespace MeshGenerator
         private MeshFilter meshFilter;
         private MeshRenderer meshRenderer;
         private MeshCollider meshCollider;
+        private Rigidbody rigidBody;
 
         private void Awake()
         {
             meshFilter = GetComponent<MeshFilter>();
             meshRenderer = GetComponent<MeshRenderer>();
             meshCollider = GetComponent<MeshCollider>();
+            rigidBody = GetComponent<Rigidbody>();
         }
 
         void Start()
@@ -27,6 +28,18 @@ namespace MeshGenerator
             meshFilter.mesh = mesh;
             meshCollider.sharedMesh = mesh;
             meshCollider.convex = true;
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            foreach (var contactPoint in other.contacts)
+            {
+                if (contactPoint.otherCollider.name.ToLower().Contains("plane"))
+                {
+                    rigidBody.AddForce(new Vector3(0f, 6.5f, 0f), ForceMode.Impulse);
+                    return;
+                }
+            }
         }
     }
 

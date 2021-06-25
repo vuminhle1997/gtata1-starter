@@ -3,7 +3,7 @@ Shader "Exercise3/PhongShader"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "red" {}
+        _MainTex ("Texture", 2D) = "red" {} // only white and red are valid default values, not from the HDRP/Lit template
         _LightPoint ("Light Point Postion", Vector) = (0, 0, 0, 0)
         _AmbientCoefficient ("Ambient Coefficient", Float) = 1.0
         _DiffuseCoefficient ("Diffuse Coefficient", Float) = 1.0
@@ -77,7 +77,12 @@ Shader "Exercise3/PhongShader"
             }
 
             /**
-             * 
+             * Calculates the ambient, diffuse (independent of observer) and specular colors (depends on observer).
+             * First calculates the vectors L, N, V and R.
+             * The ambient color does not need vectors.
+             * The diffuse needs the vectors L and N.
+             * The specular term needs the vectors V and R.
+             * In the end, sums up the terms and multiple this value with the material color.
              * Sources:
              * - Dr. David Strippgen Lecture (SoSe 20) from a slide
              * - http://www.cs.toronto.edu/~jacobson/phong-demo/
@@ -90,16 +95,15 @@ Shader "Exercise3/PhongShader"
                 // for specular color
                 float3 V = normalize(-output.worldPosition);
                 float3 R = reflect(-L, N);
-                float attenuation = 1/pow(length(L), 2); // f
+                float attenuation = 1/pow(length(L), 2); // f, weakens the light strength on the material -> optional value
 
-                // Ambient Color
-                // TODO: fix this
-                float3 AmbientIntensity = UNITY_LIGHTMODEL_AMBIENT.rgb;
+                // Ambient Color "A"
+                float3 AmbientIntensity = UNITY_LIGHTMODEL_AMBIENT.xyz;
                 float AmbientColor = length(AmbientIntensity * _AmbientCoefficient);
-                // Diffuse Color
+                // Diffuse Color "D"
                 float phongDiffuse = length(_DiffuseColor.rgb);
                 float DiffuseColor = attenuation * phongDiffuse * _DiffuseCoefficient * dot(L, N);
-                // Specular Color
+                // Specular Color "S"
                 float phongSpec = length(_SpecularColor.rgb);
                 float SpecularColor = attenuation * _SpecularCoefficient * phongSpec * pow(max(0.0, dot(V, R)), _Shininess); 
 
